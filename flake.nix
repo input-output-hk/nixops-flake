@@ -71,6 +71,8 @@
 
     # Nixops 2.X related repo pinned inputs
 
+
+
   };
 
   outputs = { self, nixpkgs, nixpkgs-pin, flake-utils, ... }:
@@ -114,11 +116,12 @@
       apps = {
         info = flake-utils.lib.mkApp {
           drv = pkgs.writeShellScriptBin "info" ''
-            echo -e "\nNIXOPS VERSIONS\n\n"
-            echo -e "The following nixops packages are available from this flake:"
+            echo -e "\nNIXOPS VERSIONS INFO\n"
+            echo -e "The following nixops packages are available from this flake:\n"
             echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames packages)}"
             echo -e "\nSee the repo README.md file for a detailed description of each attribute and usage examples.\n"
-            echo -e "\nTo summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:\n"
+            echo "  https://github.com/input-output-hk/nixops/versions"
+            echo -e "\n\nTo summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:\n"
             echo "  nix <build|shell> github:input-output-hk/nixops/versions#\''${ATTRIBUTE}"
             echo -e "\n\nThe following attributes can be built via flake, impurely, with specified plugins (at least one of \''${PLUGIN}):\n"
             echo -e "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames impure)}\n"
