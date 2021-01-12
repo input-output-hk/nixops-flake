@@ -1,0 +1,17 @@
+diff --git i/release.nix w/release.nix
+index e48ca04..1057173 100644
+--- i/release.nix
++++ w/release.nix
+@@ -1,10 +1,11 @@
+ { nixopsSrc ? { outPath = ./.; revCount = 0; shortRev = "abcdef"; rev = "HEAD"; }
+ , officialRelease ? false
+ , nixpkgs ? <nixpkgs>
++, system ? builtins.currentSystem
+ }:
+ 
+ let
+-  pkgs = import nixpkgs { };
++  pkgs = import nixpkgs { inherit system; };
+   version = "1.6.1" + (if officialRelease then "" else "pre${toString nixopsSrc.revCount}_${nixopsSrc.shortRev}");
+   packet = pkgs.python2Packages.packet-python.overrideAttrs (old: {
+     src = pkgs.fetchFromGitHub {

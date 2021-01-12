@@ -1,0 +1,16 @@
+diff --git i/release.nix w/release.nix
+index 6946898..40f5ffe 100644
+--- i/release.nix
++++ w/release.nix
+@@ -1,9 +1,10 @@
+ { nixopsLibvirtd ? { outPath = ./.; revCount = 0; shortRev = "abcdef"; rev = "HEAD"; }
+ , nixpkgs ? <nixpkgs>
+ , officialRelease ? false
++, system ? builtins.currentSystem
+ }:
+ let
+-  pkgs = import nixpkgs {};
++  pkgs = import nixpkgs { inherit system; };
+   version =  "1.7" + (if officialRelease then "" else "pre${toString nixopsLibvirtd.revCount}_${nixopsLibvirtd.shortRev}");
+ in
+   rec {

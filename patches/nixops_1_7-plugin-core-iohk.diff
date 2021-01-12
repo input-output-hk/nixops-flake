@@ -1,0 +1,41 @@
+diff --git i/doc/manual/default.nix w/doc/manual/default.nix
+index f7e7488..e6440b6 100644
+--- i/doc/manual/default.nix
++++ w/doc/manual/default.nix
+@@ -1,8 +1,8 @@
+-{ revision ? "local", nixpkgs ? <nixpkgs> }:
++{ revision ? "local", nixpkgs ? <nixpkgs>, system ? builtins.currentSystem }:
+ 
+ let
+ 
+-  pkgs = import nixpkgs {};
++  pkgs = import nixpkgs { inherit system; };
+ 
+   systemModule = pkgs.lib.fixMergeModules [ ../../nix/options.nix ./dummy.nix ] {
+                    inherit pkgs; utils = {};
+diff --git i/release.nix w/release.nix
+index 404cc36..8a0e307 100644
+--- i/release.nix
++++ w/release.nix
+@@ -2,10 +2,11 @@
+ , officialRelease ? false
+ , nixpkgs ? <nixpkgs>
+ , p ? (p: [ ])
++, system ? builtins.currentSystem
+ }:
+ 
+ let
+-  pkgs = import nixpkgs { config = {}; overlays = []; };
++  pkgs = import nixpkgs { inherit system; config = {}; overlays = []; };
+   version = "1.7" + (if officialRelease then "" else "pre${toString nixopsSrc.revCount}_${nixopsSrc.shortRev}");
+ 
+   allPlugins = let
+@@ -45,7 +46,7 @@ in rec {
+     distPhase =
+       ''
+         # Generate the manual and the man page.
+-        cp ${(import ./doc/manual { revision = nixopsSrc.rev; inherit nixpkgs; }).optionsDocBook} doc/manual/machine-options.xml
++        cp ${(import ./doc/manual { revision = nixopsSrc.rev; inherit nixpkgs system; }).optionsDocBook} doc/manual/machine-options.xml
+ 
+         for i in scripts/nixops setup.py doc/manual/manual.xml; do
+           substituteInPlace $i --subst-var-by version ${version}

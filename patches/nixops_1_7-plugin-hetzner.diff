@@ -1,0 +1,17 @@
+diff --git i/release.nix w/release.nix
+index e300331..ed0e179 100644
+--- i/release.nix
++++ w/release.nix
+@@ -1,10 +1,11 @@
+ { src ? { outPath = ./.; revCount = 0; shortRev = "abcdef"; rev = "HEAD"; }
+ , officialRelease ? false
+ , nixpkgs ? <nixpkgs>
++, system ? builtins.currentSystem
+ }:
+ 
+ let
+-  pkgs = import nixpkgs { system = "x86_64-linux"; };
++  pkgs = import nixpkgs { inherit system; };
+   version = "1.7" +
+             (if officialRelease then ""
+              else if src ? lastModified then "pre${builtins.substring 0 8 src.lastModified}.${src.shortRev}"
