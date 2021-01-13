@@ -27,7 +27,7 @@
 
     nixops_1_7-plugin-core-iohk = {
       # Commit pin from branch: nixops-core-pr-int
-      url = "github:input-output-hk/nixops?rev=28dd42a2dc9f6bada1ea587de80cde8dae0ddbf0";
+      url = "github:input-output-hk/nixops?rev=2a94052d3d69953d098b917b392f2e134b499791";
       flake = false;
     };
 
@@ -121,10 +121,10 @@
         info = flake-utils.lib.mkApp {
           drv = pkgs.writeShellScriptBin "info" ''
             echo -e "\nNIXOPS VERSIONS INFO\n"
-            echo -e "The following nixops packages are available from this flake:\n"
-            echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames packages)}"
-            echo -e "\nSee the repo README.md file for a detailed description of each attribute and usage examples.\n"
+            echo -e "See the repo README.md file for a detailed description of each attribute and usage examples.\n"
             echo "  https://github.com/input-output-hk/nixops/versions"
+            echo -e "\n\nThe following nixops packages are available from this flake:\n"
+            echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames packages)}"
             echo -e "\n\nTo summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:\n"
             echo "  nix <build|shell> github:input-output-hk/nixops/versions#\''${ATTRIBUTE}"
             echo -e "\n\nThe following attributes can be built via flake, impurely, with specified plugins (at least one of \''${PLUGIN}):\n"
@@ -137,6 +137,7 @@
             echo "  nix run github:input-output-hk/nixops/versions#repl      # A repl for the remote flake not yet cloned locally"
             echo "  nix run .#repl                                           # A repl for a local flake from the root repo dir"
             echo "  nix repl repl.nix                                        # A repl for a local flake from the root repo dir"
+            echo
           '';
         };
         repl = flake-utils.lib.mkApp {

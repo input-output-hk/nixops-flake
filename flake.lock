@@ -51,17 +51,17 @@
     "nixops_1_7-plugin-core-iohk": {
       "flake": false,
       "locked": {
-        "lastModified": 1565890448,
-        "narHash": "sha256-+cG167ZI5OYGiybjOC5dVaH+h+kvDheSBmZdCBxi5Cg=",
+        "lastModified": 1591371579,
+        "narHash": "sha256-HzatIYKxcqrJY/mOsfsCdXi2R3EpCc4lttsfswgHHdE=",
         "owner": "input-output-hk",
         "repo": "nixops",
-        "rev": "28dd42a2dc9f6bada1ea587de80cde8dae0ddbf0",
+        "rev": "2a94052d3d69953d098b917b392f2e134b499791",
         "type": "github"
       },
       "original": {
         "owner": "input-output-hk",
         "repo": "nixops",
-        "rev": "28dd42a2dc9f6bada1ea587de80cde8dae0ddbf0",
+        "rev": "2a94052d3d69953d098b917b392f2e134b499791",
         "type": "github"
       }
     },
