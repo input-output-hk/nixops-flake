@@ -1,8 +1,7 @@
 { self
 , system
 , pkgs
-, nixopsCore
-, coreVersion ? "1_7"
+, patches ? []
 , validPlugins
 , p ? validPlugins
 , ...
@@ -25,29 +24,24 @@ let
     trace: WARNING
   '' p;
 
-  patchPlugin = { plugin, v ? "1_7" }: pkgs.applyPatches {
-    src = self.inputs."nixops_${v}-plugin-${plugin}";
-    name = "nixops_${v}-plugin-${plugin}-patched";
-    patches = [ (../patches + "/nixops_${v}-plugin-${plugin}.diff") ];
+  nixpkgs_2-plugin-patched = pkgs.applyPatches {
+    inherit patches;
+    src = self.inputs.nixpkgs-plugin-2;
+    name = "nixpkgs_2-plugin-patched";
   };
 
-  nixops_1-plugin-core-patched = patchPlugin { plugin = nixopsCore; v = coreVersion; };
-  nixops_1-plugin-aws-patched = patchPlugin { plugin = "aws"; };
-  nixops_1-plugin-hetzner-patched = patchPlugin { plugin = "hetzner"; };
-  nixops_1-plugin-libvirtd-patched = patchPlugin { plugin = "libvirtd"; };
-  nixops_1-plugin-packet-patched = patchPlugin { plugin = "packet"; };
-  nixops_1-plugin-vbox-patched = patchPlugin { plugin = "vbox"; };
+  nixops_2-nixpkgs = import nixpkgs_2-plugin-patched { inherit system; };
 
+in nixops_2-nixpkgs.nixops2Unstable.withPlugins (ps: with ps; let
   allPlugins = {
-    aws = nixops_1-plugin-aws-patched;
-    hetzner = nixops_1-plugin-hetzner-patched;
-    packet = nixops_1-plugin-packet-patched;
-    virtd = nixops_1-plugin-libvirtd-patched;
-    vbox = nixops_1-plugin-vbox-patched;
+    aws = nixops-aws;
+    encrypted-links = nixops-encrypted-links;
+    gcp = nixops-gcp;
+    packet = nixops-packet;
+    virtd = nixops-virtd;
+    vbox = nixopsvbox;
   };
-
   filteredPlugins = attrValues (filterAttrs (n: v: builtins.elem n p') allPlugins);
-
 in
   assert assertMsg (isList p) ''
     ERROR
@@ -68,13 +62,4 @@ in
     trace: ERROR  -->  "${toString plugin}" must be one of ${toPretty {} validPlugins}
     trace: ERROR
   '') p;
-(import (nixops_1-plugin-core-patched + "/release.nix") {
-  inherit system;
-  nixpkgs = self.inputs.nixpkgs-plugin-1.outPath;
-  p = (p:
-    let
-      pluginSources = filteredPlugins;
-      plugins = map (source: p.callPackage (source + "/release.nix") { })
-        pluginSources;
-    in [] ++ plugins);
-}).build.${system}
+filteredPlugins)

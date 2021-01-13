@@ -51,7 +51,7 @@
     };
 
     nixops_1_7-plugin-packet = {
-      # Commit pin from branch: cpr-support
+      # Commit pin from branch: master
       url = "github:input-output-hk/nixops-packet?rev=08992f6f69dbe1d7f98783d43bb2be758f8d6676";
       flake = false;
     };
@@ -86,7 +86,6 @@
     in rec {
       overlay = import ./overlay.nix { inherit self system pkgs; };
 
-      defaultPackage = packages.nixops_1_8-nixos-unstable;
       defaultApp = apps.info;
 
       legacyPackages = import nixpkgs {
@@ -108,13 +107,24 @@
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [
           nixfmt
-          # packages.nixops_1_7-preplugin
         ];
       };
 
-      impure = {
-        nixops_1_7-iohk-unstable = p: pkgs.callPackage ./pkgs/nixops_1-unstable.nix { inherit self system pkgs p; nixopsCore = "core-iohk"; coreVersion = "1_7"; };
-        nixops_1_8-nixos-unstable = p: pkgs.callPackage ./pkgs/nixops_1-unstable.nix { inherit self system pkgs p; nixopsCore = "core-nixos"; coreVersion = "1_8"; };
+      impure = let
+        mkNixops_1 = nixopsCore: coreVersion: p: pkgs.callPackage ./pkgs/nixops_1-unstable.nix {
+          inherit self system pkgs nixopsCore coreVersion p;
+          validPlugins = [ "aws" "hetzner" "packet" "virtd" "vbox" ];
+        };
+
+        mkNixops_2 = patches: p: pkgs.callPackage ./pkgs/nixops_2-unstable.nix {
+          inherit self system pkgs patches p;
+          validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" ];
+        };
+      in {
+        nixops_1_7-iohk-unstable = p: mkNixops_1 "core-iohk" "1_7" p;
+        nixops_1_8-nixos-unstable = p: mkNixops_1 "core-nixos" "1_8" p;
+        nixops_2_0-2020-07-unstable = p: mkNixops_2 [ ./patches/nixpkgs-pr83548-2020-07.diff ] p;
+        nixops_2_0-2021-01-unstable = p: mkNixops_2 [ ./patches/nixpkgs-pr83548-2021-01.diff ] p;
       };
 
       apps = {
@@ -127,11 +137,12 @@
             echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames packages)}"
             echo -e "\n\nTo summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:\n"
             echo "  nix <build|shell> github:input-output-hk/nixops/versions#\''${ATTRIBUTE}"
-            echo -e "\n\nThe following attributes can be built via flake, impurely, with specified plugins (at least one of \''${PLUGIN}):\n"
+            echo -e "\n\nThe following attributes can be built via flake, impurely, with specified plugins available (at least one of \''${PLUGIN}):\n"
             echo -e "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames impure)}\n"
             echo "  nix <build|shell> --impure --expr '(builtins.getFlake \"github:input-output-hk/nixops/versions\")' \\"
             echo "    '.impure.\''${builtins.currentSystem}.\''${ATTRIBUTE} [ \''${PLUGIN} ]'"
-            echo -e "\n  where \''${PLUGIN} is of (with quotes): \"aws\" \"hetzner\" \"packet\" \"libvirtd\" \"vbox\""
+            echo -e "\n  where \''${PLUGIN} is of (with quotes): \"aws\" \"hetzner\" \"gcp\" \"packet\" \"virtd\" \"vbox\" \"encrypted-links\""
+            echo "  and where \`(toString ./.)\` can be substituted for the remote flake path in the command above if you are in a root local repo dir."
             echo -e "\n\nA repl of this flake can be run by any of:\n"
             echo "  nix run github:input-output-hk/nixops/versions#repl      # A repl for the remote flake not yet cloned locally"
             echo "  nix run .#repl                                           # A repl for a local flake from the root repo dir"
@@ -150,5 +161,12 @@
         };
       };
     }
-  ) // { hydraJobs = self.packages; };
+  ) // {
+    hydraJobs = self.packages;
+    defaultPackage = {
+      # Separate the default job based on architecture until the Darwin bug on the latest nixops package is fixed
+      x86_64-linux = self.packages.x86_64-linux.nixops_2_0-2021-01-unstable;
+      x86_64-darwin = self.packages.x86_64-darwin.nixops_1_8-nixos-unstable;
+    };
+  };
 }
