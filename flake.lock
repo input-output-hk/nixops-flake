@@ -199,6 +199,23 @@
         "type": "github"
       }
     },
+    "nixpkgs-plugin-2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1595431795,
+        "narHash": "sha256-k5k6Tz1WGA48hQ4zJPwAsyRQw6jHlr/FeTdsQbDxKzs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "714fac4cc9ba9b0ef29964c8b7fd9d50455aa380",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "714fac4cc9ba9b0ef29964c8b7fd9d50455aa380",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -212,7 +229,8 @@
         "nixops_1_8-plugin-core-nixos": "nixops_1_8-plugin-core-nixos",
         "nixpkgs": "nixpkgs",
         "nixpkgs-pin": "nixpkgs-pin",
-        "nixpkgs-plugin-1": "nixpkgs-plugin-1"
+        "nixpkgs-plugin-1": "nixpkgs-plugin-1",
+        "nixpkgs-plugin-2": "nixpkgs-plugin-2"
       }
     }
   },

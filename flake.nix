@@ -70,9 +70,11 @@
 
 
     # Nixops 2.X related repo pinned inputs
-
-
-
+    nixpkgs-plugin-2 = {
+      # Commit pin from branch: master
+      url = "github:NixOS/nixpkgs?rev=714fac4cc9ba9b0ef29964c8b7fd9d50455aa380";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-pin, flake-utils, ... }:
@@ -98,7 +100,9 @@
           nixops_1_7-preplugin
           nixops_1_7-preplugin-unstable
           nixops_1_7-iohk-unstable
-          nixops_1_8-nixos-unstable;
+          nixops_1_8-nixos-unstable
+          nixops_2_0pre-2020-07-unstable
+          nixops_2_0pre-2021-01-unstable;
       };
 
       devShell = pkgs.mkShell {
