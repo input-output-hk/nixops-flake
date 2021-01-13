@@ -16,6 +16,7 @@ let
 
 in nixops_2-nixpkgs.nixops2Unstable.withPlugins (ps: with ps; [
   nixops-aws
+  nixops-gcp
   nixops-packet
   nixops-virtd
   nixops-encrypted-links

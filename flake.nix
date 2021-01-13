@@ -101,8 +101,8 @@
           nixops_1_7-preplugin-unstable
           nixops_1_7-iohk-unstable
           nixops_1_8-nixos-unstable
-          nixops_2_0pre-2020-07-unstable
-          nixops_2_0pre-2021-01-unstable;
+          nixops_2_0-2020-07-unstable
+          nixops_2_0-2021-01-unstable;
       };
 
       devShell = pkgs.mkShell {
@@ -132,11 +132,11 @@
             echo "  nix <build|shell> --impure --expr '(builtins.getFlake \"github:input-output-hk/nixops/versions\")' \\"
             echo "    '.impure.\''${builtins.currentSystem}.\''${ATTRIBUTE} [ \''${PLUGIN} ]'"
             echo -e "\n  where \''${PLUGIN} is of (with quotes): \"aws\" \"hetzner\" \"packet\" \"libvirtd\" \"vbox\""
-            echo -e "\n\nLegacy packages are also available from this flake."
-            echo -e "A repl of this flake can be run by any of:\n"
+            echo -e "\n\nA repl of this flake can be run by any of:\n"
             echo "  nix run github:input-output-hk/nixops/versions#repl      # A repl for the remote flake not yet cloned locally"
             echo "  nix run .#repl                                           # A repl for a local flake from the root repo dir"
             echo "  nix repl repl.nix                                        # A repl for a local flake from the root repo dir"
+            echo -e "\n\nLegacy packages are also available from this flake from the \`legacyPackages.\''${system}.nixops*\` attributes via overlay."
             echo
           '';
         };
