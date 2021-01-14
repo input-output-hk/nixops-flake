@@ -7,7 +7,11 @@ let
 
   mkNixops_2 = patches: pkgs.callPackage ./pkgs/nixops_2-unstable.nix {
     inherit self system pkgs patches;
-    validPlugins = [ "aws" "encrypted-links" "gcp" "packet" "packet" "virtd" "vbox" ];
+    # Remove libvirtd plugin from Darwin until the compile error is fixed
+    validPlugins = if pkgs.stdenv.isLinux then
+      [ "aws" "encrypted-links" "gcp" "packet" "packet" "virtd" "vbox" ]
+    else
+      [ "aws" "encrypted-links" "gcp" "packet" "packet" "vbox" ];
   };
 in final: prev: {
   nixops_1_6_1-preplugin = self.inputs.nixpkgs-pin.legacyPackages.${system}.nixops_1_6_1;

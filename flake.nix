@@ -86,6 +86,7 @@
     in rec {
       overlay = import ./overlay.nix { inherit self system pkgs; };
 
+      defaultPackage = packages.nixops_2_0-2021-01-unstable;
       defaultApp = apps.info;
 
       legacyPackages = import nixpkgs {
@@ -161,12 +162,5 @@
         };
       };
     }
-  ) // {
-    hydraJobs = self.packages;
-    defaultPackage = {
-      # Separate the default job based on architecture until the Darwin bug on the latest nixops package is fixed
-      x86_64-linux = self.packages.x86_64-linux.nixops_2_0-2021-01-unstable;
-      x86_64-darwin = self.packages.x86_64-darwin.nixops_1_8-nixos-unstable;
-    };
-  };
+  ) // { hydraJobs = self.packages; };
 }
