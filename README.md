@@ -33,6 +33,9 @@ nix run .#info
 
 * The following flake application attributes can be run for nixops version repo repl:
 ```
+# For repl from a remote repo not yet cloned:
+nix run github:input-output-hk/nixops/versions#repl-remote
+
 # For repl from a cloned repo in the root dir:
 nix run .#repl
 nix repl repl.nix
@@ -113,7 +116,7 @@ nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))'\
 # "aws" "encrypted-links" "gcp" "hetzner" "packet" "virtd" "vbox"
 ```
 
-* Nixops can be build impurely with no plugins.  In this case, a warning will be shown during the build.
+* Nixops can be built impurely with no plugins.  In this case, a warning will be shown during the build.
 
 
 ## Flake Outputs and Legacy Packages
