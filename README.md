@@ -11,6 +11,21 @@
 * Nix versions which do not support flakes may still utilize these nixops packages via the flake compatibility shim -- see below.
 
 
+### Quick Start
+
+* Without needing to clone this repo, have fun with the following!
+```
+# Build yourself a shiny new nixops and use it from a nix shell!
+nix shell github:input-output-hk/nixops/versions
+
+# Get some info about nixops build attributes and options available:
+nix run github:input-output-hk/nixops/versions
+
+# Repl the nixops flake remotely, no need to clone!
+nix run github:input-output-hk/nixops/versions#repl-remote
+```
+
+
 ### Lorri, Direnv
 
 * Git clone this repo and enter the top level repo directory.
