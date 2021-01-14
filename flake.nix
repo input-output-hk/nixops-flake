@@ -159,6 +159,14 @@
             nix repl $replNix
           '';
         };
+        repl-remote = flake-utils.lib.mkApp {
+          drv = pkgs.writeShellScriptBin "repl" ''
+            replNix="$(mktemp)"
+            echo "builtins.getFlake \"github:input-output-hk/nixops/versions\"" > $replNix
+            trap "rm $replNix" EXIT
+            nix repl $replNix
+          '';
+        };
       };
     }
   ) // { hydraJobs = self.packages; };
