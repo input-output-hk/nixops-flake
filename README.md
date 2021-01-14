@@ -101,16 +101,16 @@ nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet
 (*) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 ```
 
-* Nixops versions can be built impurely from the attribute names above, with specified plugins (at least one of ${PLUGIN}):
+* Nixops versions can be built impurely from the attribute names above, with specified plugins (at least one of `${PLUGIN}`):
 ```
 # For attributes from a remote repo not yet cloned:
-nix <build|shell> --impure --expr '(builtins.getFlake "github:input-output-hk/nixops/versions")' \
-  '.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
+nix <build|shell> --impure --expr '(builtins.getFlake "github:input-output-hk/nixops/versions")'\
+'.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
 
 
 # For attributes from a cloned repo in the root dir:
-nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))' \
-  '.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
+nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))'\
+'.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
 
 # Where ${PLUGIN} is generally of the following plugin strings (with quotes), depending on attribute selected:
 # "aws" "encrypted-links" "gcp" "hetzner" "packet" "virtd" "vbox"
