@@ -66,9 +66,10 @@ nixops_1_7-iohk-unstable          1.7pre0_abcdef         Plugins: aws, hetzner, 
 nixops_1_8-nixos-unstable         1.8pre0_abcdef         Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_2_0-2020-07-unstable       @version@              Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links, contrib
 nixops_2_0-2021-01-unstable       @version@              Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links, contrib
+
+(!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
+(*) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 ```
-(!) = Note that there is a build error of the `libvirtd` plugin on Darwin at the moment
-(1) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 
 
 ### Building Flake Attributes Purely
@@ -95,9 +96,10 @@ nixops_1_7-iohk-unstable         1.7pre0_abcdef        Plugins: aws, hetzner, pa
 nixops_1_8-nixos-unstable        1.8pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_2_0-2020-07-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links
 nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links
+
+(!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
+(*) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 ```
-(!) = Available on `x86_64-linux` only at the moment; Darwin throws a build error which needs to be fixed
-(1) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 
 * Nixops versions can be built impurely from the attribute names above, with specified plugins (at least one of ${PLUGIN}):
 ```
@@ -111,7 +113,7 @@ nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))' \
   '.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
 
 # Where ${PLUGIN} is generally of the following plugin strings (with quotes), depending on attribute selected:
-# "aws" "hetzner" "gcp" "packet" "libvirtd" "vbox" "contrib" "encrypted-links"
+# "aws" "encrypted-links" "gcp" "hetzner" "packet" "virtd" "vbox"
 ```
 
 * Nixops can be build impurely with no plugins.  In this case, a warning will be shown during the build.
@@ -131,8 +133,8 @@ nix-build default.nix -A legacyPackages.${SYSTEM}.${ATTRIBUTE}
 ## Default Package Version
 
 * Due to a Darwin build error in the libvirtd plugin, the default packages by system are slightly different:
-  * `x86_64-linux`:  nixops_2_0-2021-01-unstable, all plugins
-  * `x86_64-darwin`: nixops_2_0-2021-01-unstable, all plugins except libvirtd
+  * `x86_64-linux`:  `nixops_2_0-2021-01-unstable`, all plugins
+  * `x86_64-darwin`: `nixops_2_0-2021-01-unstable`, all plugins except libvirtd
 * To build or enter a shell with the default nixops package, run:
 ```
 # For the default nixops package from a remote repo not yet cloned:
@@ -148,7 +150,7 @@ nix shell .#
 
 ### nixops_2_0-2021-01-unstable (@version@)
 
-* Pure builds are compiled with all mentioned plugins
+* Pure builds are compiled with all mentioned plugins (except for libvirtd on Darwin)
 * Impure builds may be used to selectively choose plugins
 * Plugins available are aws, gcp, packet, libvirtd(!), vbox, nixos-modules-contrib ("contrib below"), encrypted-links ("links" below):
 ```
@@ -161,10 +163,11 @@ packet         > v0.0.4    2020-09-12      cdeba70d6c2c878ad462e119e1accb935e974
 libvirtd(!)    > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-17      2729672865ebe2aa973c062a3fbddda8c1359da0    github:nix-community/nixops-vbox
 links                      2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
-contrib(1)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
-```
+contrib(*)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
+
 (!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
-(1) = The nixos-modules-contrib plugin is not optional -- it is always included
+(*) = The nixos-modules-contrib plugin is not optional -- it is always included
+```
 
 
 ### nixops_2_0-2020-07-unstable (@version@)
@@ -182,10 +185,11 @@ packet         > v0.0.4    2020-09-12      cdeba70d6c2c878ad462e119e1accb935e974
 libvirtd(!)    > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-10      562760e68cbe7f82eaf25c78563c967706dc161a    github:nix-community/nixops-vbox
 links                      2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
-contrib(1)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
-```
+contrib(*)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
+
 (!) = Note that there is a build error of the `libvirtd` plugin on Darwin at the moment
-(1) = The nixos-modules-contrib plugin is not optional -- it is always included
+(*) = The nixos-modules-contrib plugin is not optional -- it is always included
+```
 
 
 ### nixops_1_8-nixos-unstable (1.8pre0_abcdef)
@@ -262,7 +266,7 @@ nixops         1.6.1       2018-09-14      3d5e816e622b7863daa76732902fd20dba72a
 
 ## Reminders
 
-### Generating an Updated Poetry Nixop2 Patch File
+### Generating an Updated Poetry Nixops2 Patch File
 
 * From the nixops2 PR nixpkgs commit, git init to begin tracking changes for a patch and then make the following modifications:
 ```
