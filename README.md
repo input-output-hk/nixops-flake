@@ -272,6 +272,7 @@ nixops         1.6.1       2018-09-14      3d5e816e622b7863daa76732902fd20dba72a
 
 * A `nix flake show` command will break due to an issue with IFD and flakes.
 * This appears to be cosmetic and will be fixed when there is a suitable workaround.  [IssueRef](https://discourse.nixos.org/t/how-to-use-flakes-with-ifd/10300)
+* Testing was done at nix version `nix (Nix) 2.4pre20201205_a5d85d0`
 
 
 ## To Do
