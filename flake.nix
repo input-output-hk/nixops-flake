@@ -145,7 +145,6 @@
             echo -e "\n  where \''${PLUGIN} is of (with quotes): \"aws\" \"hetzner\" \"gcp\" \"packet\" \"virtd\" \"vbox\" \"encrypted-links\""
             echo "  and where \`(toString ./.)\` can be substituted for the remote flake path in the command above if you are in a root local repo dir."
             echo -e "\n\nA repl of this flake can be run by any of:\n"
-            echo "  nix run github:input-output-hk/nixops/versions#repl      # A repl for the remote flake not yet cloned locally"
             echo "  nix run .#repl                                           # A repl for a local flake from the root repo dir"
             echo "  nix repl repl.nix                                        # A repl for a local flake from the root repo dir"
             echo -e "\n\nLegacy packages are also available from this flake from the \`legacyPackages.\''${system}.nixops*\` attributes via overlay."

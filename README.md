@@ -33,9 +33,6 @@ nix run .#info
 
 * The following flake application attributes can be run for nixops version repo repl:
 ```
-# For repl from a remote repo not yet cloned:
-nix run github:input-output-hk/nixops/versions#repl
-
 # For repl from a cloned repo in the root dir:
 nix run .#repl
 nix repl repl.nix
