@@ -89,7 +89,11 @@ nixops_2_0-2021-01-unstable       @version@              Plugins: aws, gcp, pack
 
 ### Building Flake Attributes Purely
 
-* Building purely automatically adds all the plugins available by default to the resulting binary.
+* Building purely automatically will add all plugins to the resulting binary.  Two exceptions to this are:
+  * The plugin libvirtd will be excluded on Darwin for `nixops_2_0` attributes due to a build error
+  * The plugin encrypted-links will be excluded on `nixops_2_0` attributes due to a bug and a packet plugin conflict
+    * Bug [IssueRef](https://github.com/nix-community/nixops-encrypted-links/pull/1)
+    * Packet plugin conflict [IssueRef](https://github.com/nix-community/nixops-encrypted-links/issues/2)
 * Nixops versions can be built from the attribute names above, with:
 ```
 # For attributes from a remote repo not yet cloned:
@@ -109,11 +113,12 @@ Flake Attribute Name             Binary Ver (*)        Comment
 -------------------------        --------------        -----------------------------------------------------------------------
 nixops_1_7-iohk-unstable         1.7pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_1_8-nixos-unstable        1.8pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
-nixops_2_0-2020-07-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links
-nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links
+nixops_2_0-2020-07-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links(1)
+nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links(1)
 
 (!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
 (*) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
+(1) = Currently incompatible with packet
 ```
 
 * Nixops versions can be built impurely from the attribute names above, with specified plugins (at least one of `${PLUGIN}`):
@@ -177,11 +182,12 @@ gcp                        2020-12-26      4ac78a5a7f30170e58d4f376e46ab84736fbc
 packet         > v0.0.4    2020-09-12      cdeba70d6c2c878ad462e119e1accb935e974ac8    github:input-output-hk/nixops-packet
 libvirtd(!)    > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-17      2729672865ebe2aa973c062a3fbddda8c1359da0    github:nix-community/nixops-vbox
-links                      2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
+links(1)                   2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
 contrib(*)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
 
 (!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
 (*) = The nixos-modules-contrib plugin is not optional -- it is always included
+(1) = Currently incompatible with packet
 ```
 
 
@@ -199,11 +205,12 @@ gcp                        2020-07-10      f761368c248711085542efec604971651ca14
 packet         > v0.0.4    2020-09-12      cdeba70d6c2c878ad462e119e1accb935e974ac8    github:input-output-hk/nixops-packet
 libvirtd(!)    > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-10      562760e68cbe7f82eaf25c78563c967706dc161a    github:nix-community/nixops-vbox
-links                      2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
+links(1)                   2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
 contrib(*)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
 
 (!) = Note that there is a build error of the `libvirtd` plugin on Darwin at the moment
 (*) = The nixos-modules-contrib plugin is not optional -- it is always included
+(1) = Currently incompatible with packet
 ```
 
 
@@ -266,6 +273,18 @@ Component      Tag         Commit Date     Commit Revision                      
 -----------    --------    -----------     ----------------------------------------    ------------------------------------------------
 nixops         1.6.1       2018-09-14      3d5e816e622b7863daa76732902fd20dba72a0b8    github:NixOS/nixops
 ```
+
+
+## Repo URLs For the Plugins Referenced Above
+
+* Nixops: `nixops` [https://github.com/NixOS/nixops](https://github.com/NixOS/nixops)
+* Plugin `aws` [https://github.com/NixOS/nixops-aws](https://github.com/NixOS/nixops-aws)
+* Plugin `gcp` [https://github.com/nix-community/nixops-gce](https://github.com/nix-community/nixops-gce)
+* Plugin `packet` [https://github.com/input-output-hk/nixops-packet](https://github.com/input-output-hk/nixops-packet)
+* Plugin `libvirtd` [https://github.com/nix-community/nixops-libvirtd](https://github.com/nix-community/nixops-libvirtd)
+* Plugin `vbox` [https://github.com/nix-community/nixops-vbox](https://github.com/nix-community/nixops-vbox)
+* Plugin `links` [https://github.com/nix-community/nixops-encrypted-links](https://github.com/nix-community/nixops-encrypted-links)
+* Plugin `contrib` [https://github.com/nix-community/nixos-modules-contrib](https://github.com/nix-community/nixos-modules-contrib)
 
 
 ## Notes
