@@ -9,10 +9,11 @@ echo
 echo "Setting up a new nixpkgs patch directory for generating a new nixops bundle patch..."
 echo
 
-BASEPATCH_RELATIVE="$(find ../patches/nixpkgs-pr83548-20* | sort -n -r | head -n 1)"
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+BASEPATCH_RELATIVE="$(find "${SCRIPTDIR}"/../patches/nixpkgs-pr83548-20* | sort -n -r | head -n 1)"
 BASEPATCH="$(realpath "$BASEPATCH_RELATIVE")"
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-PATCHDIR=$(realpath "$PATCHDIR_RELATIVE")
+PATCHDIR=$(realpath "${SCRIPTDIR}/${PATCHDIR_RELATIVE}")
 NIXPKGS=$(nix eval --raw --impure --expr "(builtins.getFlake (toString $REPO_ROOT)).inputs.${NIXPKGS_PIN}.outPath")
 GITREV=$(nix eval --raw --impure --expr "(builtins.getFlake (toString $REPO_ROOT)).inputs.${NIXPKGS_PIN}.rev")
 
@@ -40,6 +41,5 @@ git apply "${BASEPATCH}"
 git add -A
 
 echo
-echo "The directory \"${PATCHDIR}\" is now ready to update for generating a new patchfile"
+echo "The directory \"${PATCHDIR}\" is now ready for patch file generation"
 echo
-
