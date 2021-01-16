@@ -4826,7 +4826,7 @@ index 00000000..d09de61e
 +])
 diff --git c/pkgs/tools/package-management/nixops2/poetry-git-overlay.nix i/pkgs/tools/package-management/nixops2/poetry-git-overlay.nix
 new file mode 100644
-index 00000000..2a917b03
+index 00000000..195df977
 --- /dev/null
 +++ i/pkgs/tools/package-management/nixops2/poetry-git-overlay.nix
 @@ -0,0 +1,94 @@
@@ -4857,8 +4857,8 @@ index 00000000..2a917b03
 +    _: {
 +      src = pkgs.fetchgit {
 +        url = "https://github.com/nix-community/nixops-encrypted-links.git";
-+        rev = "045d25facbf52dcd63b005392ecd59005fb1d20a";
-+        sha256 = "00lw4bn2abzgwhjj4bz97fqmiymj3a4fxznyg5drxqwl71h5qgib";
++        rev = "15c2af68b2e8224568b59cf8bc19de00bbbe5a42";
++        sha256 = "0c0mwhy4szly4v40lq6ydvhs162r9nq54ffklhsy01h7xl6b1bgj";
 +      };
 +    }
 +  );
@@ -4926,7 +4926,7 @@ index 00000000..2a917b03
 +}
 diff --git c/pkgs/tools/package-management/nixops2/poetry.lock i/pkgs/tools/package-management/nixops2/poetry.lock
 new file mode 100644
-index 00000000..bafaacf3
+index 00000000..4628e836
 --- /dev/null
 +++ i/pkgs/tools/package-management/nixops2/poetry.lock
 @@ -0,0 +1,877 @@
@@ -4970,20 +4970,20 @@ index 00000000..bafaacf3
 +
 +[[package]]
 +name = "boto3"
-+version = "1.16.53"
++version = "1.16.56"
 +description = "The AWS SDK for Python"
 +category = "main"
 +optional = false
 +python-versions = "*"
 +
 +[package.dependencies]
-+botocore = ">=1.19.53,<1.20.0"
++botocore = ">=1.19.56,<1.20.0"
 +jmespath = ">=0.7.1,<1.0.0"
 +s3transfer = ">=0.3.0,<0.4.0"
 +
 +[[package]]
 +name = "botocore"
-+version = "1.19.53"
++version = "1.19.56"
 +description = "Low-level, data-driven core of boto 3."
 +category = "main"
 +optional = false
@@ -5169,7 +5169,7 @@ index 00000000..bafaacf3
 +type = "git"
 +url = "https://github.com/nix-community/nixops-encrypted-links.git"
 +reference = "master"
-+resolved_reference = "045d25facbf52dcd63b005392ecd59005fb1d20a"
++resolved_reference = "15c2af68b2e8224568b59cf8bc19de00bbbe5a42"
 +
 +[[package]]
 +name = "nixops-gcp"
@@ -5573,12 +5573,12 @@ index 00000000..bafaacf3
 +    {file = "boto-2.49.0.tar.gz", hash = "sha256:ea0d3b40a2d852767be77ca343b58a9e3a4b00d9db440efb8da74b4e58025e5a"},
 +]
 +boto3 = [
-+    {file = "boto3-1.16.53-py2.py3-none-any.whl", hash = "sha256:b1e91860fe2cae986f8e8238c12724f7fe4631a183e2c6f6b86714cc98645a6a"},
-+    {file = "boto3-1.16.53.tar.gz", hash = "sha256:71a0c22a040ac3a785f558628abfea8be86bb30b29003ebd124c51aba97dfeb8"},
++    {file = "boto3-1.16.56-py2.py3-none-any.whl", hash = "sha256:3f26aad4c6b238055d17fd662620284ffb4ced542ed9a2f7f9df65d97a3f1190"},
++    {file = "boto3-1.16.56.tar.gz", hash = "sha256:47151ed571c316458f4931cd2422995ba0c9f6818c5df7d75f49fc845208e42e"},
 +]
 +botocore = [
-+    {file = "botocore-1.19.53-py2.py3-none-any.whl", hash = "sha256:21677cda7b32492a1a74ac40e51d691a6623578d6700feb9976966d26a576414"},
-+    {file = "botocore-1.19.53.tar.gz", hash = "sha256:e93539781c43bd64291798a01cc6df2c0ff98e01ae7fe48286942ca8fa351680"},
++    {file = "botocore-1.19.56-py2.py3-none-any.whl", hash = "sha256:a37d073c2f166753cc3799e77d87d4096e24433fcca5e7c8cc8e77e5dbfe60e9"},
++    {file = "botocore-1.19.56.tar.gz", hash = "sha256:01496e4c2c06aab79689f2c345a0e2cceb5fe1da7858a7e7df189bcf97703223"},
 +]
 +certifi = [
 +    {file = "certifi-2020.12.5-py2.py3-none-any.whl", hash = "sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830"},

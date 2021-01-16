@@ -91,8 +91,7 @@ nixops_2_0-2021-01-unstable       @version@              Plugins: aws, gcp, pack
 
 * Building purely automatically will add all plugins to the resulting binary.  Two exceptions to this are:
   * The plugin libvirtd will be excluded on Darwin for `nixops_2_0` attributes due to a build error
-  * The plugin encrypted-links will be excluded on `nixops_2_0` attributes due to a bug and a packet plugin conflict
-    * Bug [IssueRef](https://github.com/nix-community/nixops-encrypted-links/pull/1)
+  * The plugin encrypted-links will be excluded on `nixops_2_0` attributes due to a packet plugin conflict
     * Packet plugin conflict [IssueRef](https://github.com/nix-community/nixops-encrypted-links/issues/2)
 * Nixops versions can be built from the attribute names above, with:
 ```
@@ -182,7 +181,7 @@ gcp                        2020-12-26      4ac78a5a7f30170e58d4f376e46ab84736fbc
 packet         > v0.0.4    2020-09-12      cdeba70d6c2c878ad462e119e1accb935e974ac8    github:input-output-hk/nixops-packet
 libvirtd(!)    > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-17      2729672865ebe2aa973c062a3fbddda8c1359da0    github:nix-community/nixops-vbox
-links(1)                   2020-07-13      045d25facbf52dcd63b005392ecd59005fb1d20a    github:nix-community/nixops-encrypted-links
+links(1)                   2021-01-16      15c2af68b2e8224568b59cf8bc19de00bbbe5a42    github:nix-community/nixops-encrypted-links
 contrib(*)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
 
 (!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
@@ -303,7 +302,13 @@ nixops         1.6.1       2018-09-14      3d5e816e622b7863daa76732902fd20dba72a
 
 ### Generating an Updated Poetry Nixops2 Patch File
 
-* From the nixops2 PR nixpkgs commit, git init to begin tracking changes for a patch and then make the following modifications:
+* From the nixops2 PR nixpkgs commit make a nixpkgs git tracked directory for generating a new patch file
+* A script to set up a nixpkgs git tracked directory for patch generation is available by running:
+```
+./scripts/setup-patchdir.sh
+```
+
+* From the git tracked directory, make the following modifications as needed:
 ```
 * Run the update script for poetry at: pkgs/development/tools/poetry2nix/update
 * Add a packet-python poetry override to: pkgs/development/tools/poetry2nix/poetry2nix/overrides.nix
