@@ -16,13 +16,13 @@
 * Without needing to clone this repo, have fun with the following!
 ```
 # Build yourself a shiny new nixops and use it from a nix shell!
-nix shell github:input-output-hk/nixops/versions
+nix shell github:input-output-hk/nixops-flake
 
 # Get some info about nixops build attributes and options available:
-nix run github:input-output-hk/nixops/versions
+nix run github:input-output-hk/nixops-flake
 
 # Repl the nixops flake remotely, no need to clone!
-nix run github:input-output-hk/nixops/versions#repl-remote
+nix run github:input-output-hk/nixops-flake#repl-remote
 ```
 
 
@@ -38,8 +38,8 @@ nix run github:input-output-hk/nixops/versions#repl-remote
 * The following flake application attributes can be run for nixops version information:
 ```
 # For info from a remote repo not yet cloned:
-nix run github:input-output-hk/nixops/versions
-nix run github:input-output-hk/nixops/versions#info
+nix run github:input-output-hk/nixops-flake
+nix run github:input-output-hk/nixops-flake#info
 
 # For info from a cloned repo in the root dir:
 nix run
@@ -49,7 +49,7 @@ nix run .#info
 * The following flake application attributes can be run for nixops version repo repl:
 ```
 # For repl from a remote repo not yet cloned:
-nix run github:input-output-hk/nixops/versions#repl-remote
+nix run github:input-output-hk/nixops-flake#repl-remote
 
 # For repl from a cloned repo in the root dir:
 nix run .#repl
@@ -103,7 +103,7 @@ nixops_1_6_1-preplugin            1.6.1                  Monolithic
 * Nixops versions can be built from the attribute names above, with:
 ```
 # For attributes from a remote repo not yet cloned:
-nix <build|shell> github:input-output-hk/nixops/versions#${ATTRIBUTE}
+nix <build|shell> github:input-output-hk/nixops-flake#${ATTRIBUTE}
 
 # For attributes from a cloned repo in the root dir:
 nix <build|shell> .#${ATTRIBUTE}
@@ -129,7 +129,7 @@ nixops_1_7-iohk-unstable         1.7pre0_abcdef        Plugins: aws, hetzner, pa
 * Nixops versions can be built impurely from the attribute names above, with specified plugins (at least one of `${PLUGIN}`):
 ```
 # For attributes from a remote repo not yet cloned:
-nix <build|shell> --impure --expr '(builtins.getFlake "github:input-output-hk/nixops/versions")'\
+nix <build|shell> --impure --expr '(builtins.getFlake "github:input-output-hk/nixops-flake")'\
 '.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
 
 
@@ -163,7 +163,7 @@ nix-build default.nix -A legacyPackages.${SYSTEM}.${ATTRIBUTE}
 * To build or enter a shell with the default nixops package, run:
 ```
 # For the default nixops package from a remote repo not yet cloned:
-nix <build|shell> github:input-output-hk/nixops/versions
+nix <build|shell> github:input-output-hk/nixops-flake
 
 # For the default nixops package from a cloned repo in the root dir:
 nix build

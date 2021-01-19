@@ -133,19 +133,19 @@
           drv = pkgs.writeShellScriptBin "info" ''
             echo -e "\nNIXOPS VERSIONS INFO\n"
             echo -e "See the repo README.md file for a detailed description of each attribute and usage examples.\n"
-            echo "  https://github.com/input-output-hk/nixops/versions"
+            echo "  https://github.com/input-output-hk/nixops-flake"
             echo -e "\n\nThe following nixops packages are available from this flake:\n"
             echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames packages)}"
             echo -e "\n\nTo summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:\n"
-            echo "  nix <build|shell> github:input-output-hk/nixops/versions#\''${ATTRIBUTE}"
+            echo "  nix <build|shell> github:input-output-hk/nixops-flake#\''${ATTRIBUTE}"
             echo -e "\n\nThe following attributes can be built via flake, impurely, with specified plugins available (at least one of \''${PLUGIN}):\n"
             echo -e "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames impure)}\n"
-            echo "nix <build|shell> --impure --expr '(builtins.getFlake \"github:input-output-hk/nixops/versions\")'\\"
+            echo "nix <build|shell> --impure --expr '(builtins.getFlake \"github:input-output-hk/nixops-flake\")'\\"
             echo "'.impure.\''${builtins.currentSystem}.\''${ATTRIBUTE} [ \''${PLUGIN} ]'"
             echo -e "\n  where \''${PLUGIN} is of (with quotes): \"aws\" \"hetzner\" \"gcp\" \"packet\" \"virtd\" \"vbox\" \"encrypted-links\""
             echo "  and where \`(toString ./.)\` can be substituted for the remote flake path in the command above if you are in a root local repo dir."
             echo -e "\n\nA repl of this flake can be run by any of:\n"
-            echo "  nix run github:input-output-hk/nixops/versions#repl-remote      # A repl for the remote flake not yet cloned locally"
+            echo "  nix run github:input-output-hk/nixops-flake#repl-remote      # A repl for the remote flake not yet cloned locally"
             echo "  nix run .#repl                                                  # A repl for a local flake from the root repo dir"
             echo "  nix repl repl.nix                                               # A repl for a local flake from the root repo dir"
             echo -e "\n\nLegacy packages are also available from this flake from the \`legacyPackages.\''${system}.nixops*\` attributes via overlay."
@@ -163,7 +163,7 @@
         repl-remote = flake-utils.lib.mkApp {
           drv = pkgs.writeShellScriptBin "repl" ''
             replNix="$(mktemp)"
-            echo "builtins.getFlake \"github:input-output-hk/nixops/versions\"" > $replNix
+            echo "builtins.getFlake \"github:input-output-hk/nixops-flake\"" > $replNix
             trap "rm $replNix" EXIT
             nix repl $replNix
           '';
