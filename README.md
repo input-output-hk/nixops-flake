@@ -233,13 +233,13 @@ nix shell .#
 The following lines can now replace the corresponding repo pyproject.toml lines for local development:
 
 nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-aws"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-hetzner"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-encrypted-links"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-gce"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-libvirtd"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-vbox"}
-nixops = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-packet"}
+nixops-aws = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-aws"}
+nixops-encrypted-links = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-encrypted-links"}
+nixops-gcp = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-gce"}
+nixops-hetzner = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-hetzner"}
+nixops-packet = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-packet"}
+nixops-virtd = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-libvirtd"}
+nixopsvbox = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-vbox"}
 
 The directory "/home/myUser/nixops-flake-wt/nixops-dev" is now ready for local development and testing
 ```
@@ -259,7 +259,7 @@ cd ../nixpkgs-patch/pkgs/tools/package-management/nixops2/pyproject.toml
 nix-shell
 
 # Update poetry to use the proper local development and testing repos
-poetry update
+poetry install
 
 # Enter a poetry shell for the development and testing version of nixops
 poetry shell

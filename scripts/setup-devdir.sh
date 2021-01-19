@@ -21,29 +21,29 @@ git clone https://github.com/NixOS/nixops
 echo
 git clone https://github.com/NixOS/nixops-aws
 echo
-git clone https://github.com/NixOS/nixops-hetzner
-echo
 git clone https://github.com/nix-community/nixops-encrypted-links
 echo
 git clone https://github.com/nix-community/nixops-gce
 echo
+git clone https://github.com/NixOS/nixops-hetzner
+echo
+git clone https://github.com/input-output-hk/nixops-packet
+echo
 git clone https://github.com/nix-community/nixops-libvirtd
 echo
 git clone https://github.com/nix-community/nixops-vbox
-echo
-git clone https://github.com/input-output-hk/nixops-packet
 
 echo
 echo "The following lines can now replace the corresponding pyproject.toml lines for local development:"
 echo
 echo "nixops = {path = \"${DEVDIR}/nixops\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-aws\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-hetzner\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-encrypted-links\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-gce\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-libvirtd\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-vbox\"}"
-echo "nixops = {path = \"${DEVDIR}/nixops-packet\"}"
+echo "nixops-aws = {path = \"${DEVDIR}/nixops-aws\"}"
+echo "nixops-encrypted-links = {path = \"${DEVDIR}/nixops-encrypted-links\"}"
+echo "nixops-gcp = {path = \"${DEVDIR}/nixops-gce\"}"
+echo "nixops-hetzner = {path = \"${DEVDIR}/nixops-hetzner\"}"
+echo "nixops-packet = {path = \"${DEVDIR}/nixops-packet\"}"
+echo "nixops-virtd = {path = \"${DEVDIR}/nixops-libvirtd\"}"
+echo "nixopsvbox = {path = \"${DEVDIR}/nixops-vbox\"}"
 echo
 
 echo "The directory \"${DEVDIR}\" is now ready for local development and testing"
