@@ -3,6 +3,7 @@
 set -euo pipefail
 
 NIXPKGS_PIN="nixpkgs-plugin-2"
+NIXPKGS_VER="20.09"
 PATCHDIR_RELATIVE="../../nixpkgs-patch"
 
 echo
@@ -23,6 +24,7 @@ echo "Copying \"${NIXPKGS_PIN}\" (${NIXPKGS}) to \"${PATCHDIR}\""
 mkdir -p "$PATCHDIR"
 cp -R "${NIXPKGS}"/* "$PATCHDIR"
 chmod -R +w "$PATCHDIR"
+echo "$NIXPKGS_VER" > "$PATCHDIR"/.version
 cd "$PATCHDIR"
 
 echo
