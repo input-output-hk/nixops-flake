@@ -4826,7 +4826,7 @@ index 00000000..d09de61e
 +])
 diff --git c/pkgs/tools/package-management/nixops2/poetry-git-overlay.nix i/pkgs/tools/package-management/nixops2/poetry-git-overlay.nix
 new file mode 100644
-index 00000000..195df977
+index 00000000..94a12adf
 --- /dev/null
 +++ i/pkgs/tools/package-management/nixops2/poetry-git-overlay.nix
 @@ -0,0 +1,94 @@
@@ -4837,8 +4837,8 @@ index 00000000..195df977
 +    _: {
 +      src = pkgs.fetchgit {
 +        url = "https://github.com/NixOS/nixops.git";
-+        rev = "ed2868fbc0b5924fcd4a60a8bd32a14fa196381b";
-+        sha256 = "14av9x7i3fvnzmx711x180dkjngx99g1l65wr7b5784fslzbcv5r";
++        rev = "1239ff7fb94bd647ea54d18e7c7da4b81e63f422";
++        sha256 = "1gfl9jasnds7frb9lkx4k0dkynkrlxriirqshwp79kbcjw3g6lnp";
 +      };
 +    }
 +  );
@@ -4857,8 +4857,8 @@ index 00000000..195df977
 +    _: {
 +      src = pkgs.fetchgit {
 +        url = "https://github.com/nix-community/nixops-encrypted-links.git";
-+        rev = "15c2af68b2e8224568b59cf8bc19de00bbbe5a42";
-+        sha256 = "0c0mwhy4szly4v40lq6ydvhs162r9nq54ffklhsy01h7xl6b1bgj";
++        rev = "0bb9aa50a7294ee9dca10a18ff7d9024234913e1";
++        sha256 = "00wj03wcry83acwljq5v80dyrqaxpqb4j3jsdkfy3d7n5g4aq19l";
 +      };
 +    }
 +  );
@@ -4877,8 +4877,8 @@ index 00000000..195df977
 +    _: {
 +      src = pkgs.fetchgit {
 +        url = "https://github.com/input-output-hk/nixops-packet.git";
-+        rev = "cdeba70d6c2c878ad462e119e1accb935e974ac8";
-+        sha256 = "1gnlchggjz161zrl0zmmbh0ahrb8xmr83zhl4rs4q6k7x77hwj27";
++        rev = "9e800f5cf9b0b387f4b96683f2dac16e7b56abb6";
++        sha256 = "1n7yfb0q2xl572f5h56ahjbhgxkhzyy1sd4grpzkibiyffcfp466";
 +      };
 +    }
 +  );
@@ -4926,7 +4926,7 @@ index 00000000..195df977
 +}
 diff --git c/pkgs/tools/package-management/nixops2/poetry.lock i/pkgs/tools/package-management/nixops2/poetry.lock
 new file mode 100644
-index 00000000..4628e836
+index 00000000..49b4f895
 --- /dev/null
 +++ i/pkgs/tools/package-management/nixops2/poetry.lock
 @@ -0,0 +1,877 @@
@@ -5129,7 +5129,7 @@ index 00000000..4628e836
 +type = "git"
 +url = "https://github.com/NixOS/nixops.git"
 +reference = "master"
-+resolved_reference = "ed2868fbc0b5924fcd4a60a8bd32a14fa196381b"
++resolved_reference = "1239ff7fb94bd647ea54d18e7c7da4b81e63f422"
 +
 +[[package]]
 +name = "nixops-aws"
@@ -5169,7 +5169,7 @@ index 00000000..4628e836
 +type = "git"
 +url = "https://github.com/nix-community/nixops-encrypted-links.git"
 +reference = "master"
-+resolved_reference = "15c2af68b2e8224568b59cf8bc19de00bbbe5a42"
++resolved_reference = "0bb9aa50a7294ee9dca10a18ff7d9024234913e1"
 +
 +[[package]]
 +name = "nixops-gcp"
@@ -5210,7 +5210,7 @@ index 00000000..4628e836
 +type = "git"
 +url = "https://github.com/input-output-hk/nixops-packet.git"
 +reference = "master"
-+resolved_reference = "cdeba70d6c2c878ad462e119e1accb935e974ac8"
++resolved_reference = "9e800f5cf9b0b387f4b96683f2dac16e7b56abb6"
 +
 +[[package]]
 +name = "nixops-virtd"
