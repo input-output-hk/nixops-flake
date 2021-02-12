@@ -1,0 +1,38 @@
+{
+    "niv": {
+        "branch": "nixpkgs-unstable",
+        "description": "Easy dependency management for Nix projects",
+        "homepage": "https://github.com/nmattia/niv",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a58a0b5098f0c2a389ee70eb69422a052982d990",
+        "sha256": "1dmnm6r67q75ql96hag851438ybqlx21vfn309ir3z6n08a2qsfs",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/a58a0b5098f0c2a389ee70eb69422a052982d990.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixops-flake-repo": {
+        "branch": "main",
+        "description": null,
+        "homepage": null,
+        "owner": "input-output-hk",
+        "repo": "nixops-flake",
+        "rev": "d483c9ec981e23d2650255149356b58cc19268be",
+        "sha256": "1r9xdczal2rw1cgfgkhp8h0gcdj1vh4n7aza62chan041gmgdvwg",
+        "type": "tarball",
+        "url": "https://github.com/input-output-hk/nixops-flake/archive/d483c9ec981e23d2650255149356b58cc19268be.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "release-20.09",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c495782c93ed9b2cae01ed13218e317034d4c66c",
+        "sha256": "1gnzw4yfx086gw1hqqg0sb71vj5xb6m2c15cfqqpkg2fr7q7wlhm",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/c495782c93ed9b2cae01ed13218e317034d4c66c.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
