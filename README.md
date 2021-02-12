@@ -147,12 +147,13 @@ nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))'\
 ## Flake Outputs and Legacy Packages
 
 * These nixops packages are available for use in other flakes.
-* Non-flake nix can also utilize these packages via the `legacyPackages` attributes:
+* Non-flake nix can also utilize these packages via the `legacyPackages` and other attributes:
 ```
 # Build using non-flakes nix from the legacyPackages shim in a cloned repo root dir:
 nix-build default.nix -A legacyPackages.${SYSTEM}.${ATTRIBUTE}
 ```
 * Similarly, non-flake nix can also utilize these legacy package attributes in other non-flake nix code.
+* An example of non-flake nix using direnv with this nixops-flake repo is seen [here](examples/legacy-usage/shell.nix)
 
 
 ## Default Package Version
