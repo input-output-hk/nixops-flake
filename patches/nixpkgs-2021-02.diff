@@ -17,7 +17,7 @@ index 3885278f..d7fc6075 100644
 +  ps.nixops-wg-links
  ])
 diff --git c/pkgs/applications/networking/cluster/nixops/poetry-git-overlay.nix i/pkgs/applications/networking/cluster/nixops/poetry-git-overlay.nix
-index 365221dd..ec15f473 100644
+index 365221dd..61586d07 100644
 --- c/pkgs/applications/networking/cluster/nixops/poetry-git-overlay.nix
 +++ i/pkgs/applications/networking/cluster/nixops/poetry-git-overlay.nix
 @@ -5,8 +5,8 @@ self: super: {
@@ -47,8 +47,8 @@ index 365221dd..ec15f473 100644
 +    _: {
 +      src = pkgs.fetchgit {
 +        url = "https://github.com/input-output-hk/nixops-packet.git";
-+        rev = "8d2829f0d8d7f2bff769e2f600b5d70f1f9627a2";
-+        sha256 = "12x19wzhg1qlc2ip3lgkzplv00fz21lhwg1lipzjfjbgjw0dhpvf";
++        rev = "da0421fc93240f822f9668bfb86096e4da19022b";
++        sha256 = "0vcx38dr0iipr6zc9pcw797hlb5jj8kjd0qfbgfk2y0xs53xh35r";
        };
      }
    );
@@ -85,7 +85,7 @@ index 365221dd..ec15f473 100644
 +
  }
 diff --git c/pkgs/applications/networking/cluster/nixops/poetry.lock i/pkgs/applications/networking/cluster/nixops/poetry.lock
-index 1c6ed745..1d7f6348 100644
+index 1c6ed745..220a0d5a 100644
 --- c/pkgs/applications/networking/cluster/nixops/poetry.lock
 +++ i/pkgs/applications/networking/cluster/nixops/poetry.lock
 @@ -38,20 +38,20 @@ python-versions = "*"
@@ -180,8 +180,8 @@ index 1c6ed745..1d7f6348 100644
 +[package.source]
 +type = "git"
 +url = "https://github.com/input-output-hk/nixops-packet.git"
-+reference = "poetry-req-mod"
-+resolved_reference = "8d2829f0d8d7f2bff769e2f600b5d70f1f9627a2"
++reference = "master"
++resolved_reference = "da0421fc93240f822f9668bfb86096e4da19022b"
  
  [[package]]
  name = "nixops-virtd"
@@ -235,12 +235,42 @@ index 1c6ed745..1d7f6348 100644
  [[package]]
  name = "pluggy"
  version = "0.13.1"
+@@ -355,7 +410,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+ 
+ [[package]]
+ name = "pygments"
+-version = "2.7.4"
++version = "2.8.0"
+ description = "Pygments is a syntax highlighting package written in Python."
+ category = "dev"
+ optional = false
+@@ -435,7 +490,7 @@ python-versions = "*"
+ 
+ [[package]]
+ name = "sphinx"
+-version = "3.4.3"
++version = "3.5.0"
+ description = "Python documentation generator"
+ category = "dev"
+ optional = false
+@@ -460,9 +515,9 @@ sphinxcontrib-qthelp = "*"
+ sphinxcontrib-serializinghtml = "*"
+ 
+ [package.extras]
+-docs = ["sphinxcontrib-websupport"]
+-lint = ["flake8 (>=3.5.0)", "isort", "mypy (>=0.790)", "docutils-stubs"]
++lint = ["docutils-stubs", "flake8 (>=3.5.0)", "isort", "mypy (>=0.800)"]
+ test = ["pytest", "pytest-cov", "html5lib", "cython", "typed-ast"]
++docs = ["sphinxcontrib-websupport"]
+ 
+ [[package]]
+ name = "sphinxcontrib-applehelp"
 @@ -571,7 +626,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
  [metadata]
  lock-version = "1.1"
  python-versions = "^3.8"
 -content-hash = "bd064837654a0d4a4691b3df01338b92c95a449ff400a9cd49fee843ab13ee92"
-+content-hash = "c711fc0e3b62a89c2af25bdf974be50ced23266c41423315129cdbd0dd4a69c1"
++content-hash = "958859d7c60c10f85efc5b32159c57287a86d884aaac665fd64656ce9b84e687"
  
  [metadata.files]
  alabaster = [
@@ -425,8 +455,30 @@ index 1c6ed745..1d7f6348 100644
  pluggy = [
      {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
      {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
+@@ -767,8 +799,8 @@ pycparser = [
+     {file = "pycparser-2.20.tar.gz", hash = "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0"},
+ ]
+ pygments = [
+-    {file = "Pygments-2.7.4-py3-none-any.whl", hash = "sha256:bc9591213a8f0e0ca1a5e68a479b4887fdc3e75d0774e5c71c31920c427de435"},
+-    {file = "Pygments-2.7.4.tar.gz", hash = "sha256:df49d09b498e83c1a73128295860250b0b7edd4c723a32e9bc0d295c7c2ec337"},
++    {file = "Pygments-2.8.0-py3-none-any.whl", hash = "sha256:b21b072d0ccdf29297a82a2363359d99623597b8a265b8081760e4d0f7153c88"},
++    {file = "Pygments-2.8.0.tar.gz", hash = "sha256:37a13ba168a02ac54cc5891a42b1caec333e59b66addb7fa633ea8a6d73445c0"},
+ ]
+ pyparsing = [
+     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
+@@ -799,8 +831,8 @@ snowballstemmer = [
+     {file = "snowballstemmer-2.1.0.tar.gz", hash = "sha256:e997baa4f2e9139951b6f4c631bad912dfd3c792467e2f03d7239464af90e914"},
+ ]
+ sphinx = [
+-    {file = "Sphinx-3.4.3-py3-none-any.whl", hash = "sha256:c314c857e7cd47c856d2c5adff514ac2e6495f8b8e0f886a8a37e9305dfea0d8"},
+-    {file = "Sphinx-3.4.3.tar.gz", hash = "sha256:41cad293f954f7d37f803d97eb184158cfd90f51195131e94875bc07cd08b93c"},
++    {file = "Sphinx-3.5.0-py3-none-any.whl", hash = "sha256:68da66ca3d6b35b22bea5c53d938d5f8988663dca042f0a46429a1eba1010051"},
++    {file = "Sphinx-3.5.0.tar.gz", hash = "sha256:deb468efb3abaa70d790add4147d18782d86fdeacf648d6e8afb7a99807f1546"},
+ ]
+ sphinxcontrib-applehelp = [
+     {file = "sphinxcontrib-applehelp-1.0.2.tar.gz", hash = "sha256:a072735ec80e7675e3f432fcae8610ecf509c5f1869d17e2eecff44389cdbc58"},
 diff --git c/pkgs/applications/networking/cluster/nixops/pyproject.toml i/pkgs/applications/networking/cluster/nixops/pyproject.toml
-index 09ffb54f..c095ac9e 100644
+index 09ffb54f..6c03fd04 100644
 --- c/pkgs/applications/networking/cluster/nixops/pyproject.toml
 +++ i/pkgs/applications/networking/cluster/nixops/pyproject.toml
 @@ -8,10 +8,12 @@ authors = ["Adam Hoese <adam.hose@tweag.io>"]
@@ -435,7 +487,7 @@ index 09ffb54f..c095ac9e 100644
  nixops-aws = {git = "https://github.com/NixOS/nixops-aws.git"}
 +nixops-encrypted-links = {git = "https://github.com/nix-community/nixops-encrypted-links.git"}
  nixops-gcp = {git = "https://github.com/nix-community/nixops-gce.git"}
-+nixops-packet = {git = "https://github.com/input-output-hk/nixops-packet.git", branch = "poetry-req-mod"}
++nixops-packet = {git = "https://github.com/input-output-hk/nixops-packet.git"}
  nixopsvbox = {git = "https://github.com/nix-community/nixops-vbox.git"}
 -nixops-encrypted-links = {git = "https://github.com/nix-community/nixops-encrypted-links.git"}
  nixops-virtd = {git = "https://github.com/nix-community/nixops-libvirtd.git"}

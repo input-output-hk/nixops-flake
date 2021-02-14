@@ -36,7 +36,7 @@ Component      Tag         Commit Date     Commit Revision                      
 nixops         > 1.7       2021-02-11      23db83fc91952d2dbcc64b8aa1ac16f8c8f45bed    github:NixOS/nixops
 aws            > v1.0.0    2021-02-01      dbbaa1b15b6cf7ca1ceeb0a6195f5ee27693c505    github:NixOS/nixops-aws
 gcp                        2021-02-10      fed6aadace9a9e914425589c065bb969d53f2309    github:nix-community/nixops-gce
-packet         > v0.0.4    2021-02-13      8d2829f0d8d7f2bff769e2f600b5d70f1f9627a2    github:input-output-hk/nixops-packet
+packet         > v0.0.4    2021-02-14      da0421fc93240f822f9668bfb86096e4da19022b    github:input-output-hk/nixops-packet
 libvirtd       > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-17      2729672865ebe2aa973c062a3fbddda8c1359da0    github:nix-community/nixops-vbox
 links(!)                   2021-01-18      0bb9aa50a7294ee9dca10a18ff7d9024234913e1    github:nix-community/nixops-encrypted-links

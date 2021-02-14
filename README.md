@@ -100,7 +100,7 @@ nixops_1_6_1-preplugin            1.6.1                  Monolithic
 ### Building Flake Attributes Purely
 
 * Building purely will automatically add all plugins to the resulting binary.  The exception to this is:
-  * The plugin libvirtd will be excluded on Darwin for `nixops_2_0-2021-01` and older nixops_2_0 attributes due to a libvirt build error.
+  * The plugin libvirtd will be excluded on Darwin for `nixops_2_0-2021-01` and older `nixops_2_0` attributes due to a libvirt build error.
   * The encrypted-links plugin will be excluded from the pure build as it causes an exception on partial nixops deployments
 * Nixops versions can be built from the attribute names above, with:
 ```
@@ -275,21 +275,40 @@ poetry shell
 ```
 
 * Now the local development and testing repos can be updated as needed
-* Changes to local repo code will be effective immediately in the poetry shell nixops command
-* If new changes to the pyproject.toml development and testing version are needed, such as dropping or adding a plugin, do the following:
+* The poetry shell will utilize libraries from a virtual environment, typically found by:
+```
+# From the same directory as the pyproject.toml
+poetry env list --full-path
+
+# or if outside of the directory containing pyproject.toml, but within `poetry shell`
+env | grep VIRTUAL_ENV
+
+# The virtual environment path is typically something like:
+$HOME/.cache/pypoetry/virtualenvs/$VENV/lib/$PYTHONVER/site-packages/
+```
+
+* For changes to local repo code to be effective immediately, the python in the virtual environment directory can be edited.
+* Alternatively, to either:
+  * Edit the python code from the local repository paths referenced in the pyproject.toml file, or
+  * Edit the pyproject.toml file, such as for dropping, adding or changing a plugin reference:
 ```
 # If already in a poetry shell, drop out of it
 exit
 
+# Update the local plugin repositories as needed
+vim $PATH_TO_PLUGIN_FILE
+
 # Update the pyproject.toml file as needed in the nixpkgs-patch dir
 vim ./pyproject.toml
 
-# Update poetry to use the newly edited pyproject.toml local repo references
+# Update poetry to use the newly edited pyproject.toml plugin repo references
 poetry update
 
 # Enter a poetry shell for the updated development and testing version of nixops
 poetry shell
 ```
+
+* If there are any issues with updates taking effect, the cached virtual environment directory can be deleted and the procedure above repeated.
 
 
 ## Notes
@@ -305,7 +324,7 @@ poetry shell
   * The provided `shell.nix` is using imperative import of `<nixpkgs> {}` and this may result in a different poetry version than the `update` script uses.
   * Enter a nix-shell instead with the following for version matching
 ```
-nix-shell -p poetry poetry2nix.cli -I nixpkgs=../../../../../.
+nix-shell -p poetry poetry2nix.cli pkg-config libvirt -I nixpkgs=../../../../../.
 ```
 
 
