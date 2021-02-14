@@ -75,6 +75,18 @@
       url = "github:NixOS/nixpkgs?rev=714fac4cc9ba9b0ef29964c8b7fd9d50455aa380";
       flake = false;
     };
+
+    nixpkgs-plugin-2-2021-02 = {
+      # Commit pin from branch: master
+      url = "github:NixOS/nixpkgs?rev=1ca7cd20ace967b3740893231e1586069e223af5";
+    };
+
+    # Keep this updated to the latest nixpkgs patch so the setup-patchdir.sh pin
+    # doesn't need to change
+    nixpkgs-plugin-2-latest = {
+      # Commit pin from branch: master
+      url = "github:NixOS/nixpkgs?rev=1ca7cd20ace967b3740893231e1586069e223af5";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-pin, flake-utils, ... }:
@@ -86,7 +98,7 @@
     in rec {
       overlay = import ./overlay.nix { inherit self system pkgs; };
 
-      defaultPackage = packages.nixops_2_0-2021-01-unstable;
+      defaultPackage = packages.nixops_2_0-latest-unstable;
       defaultApp = apps.info;
 
       legacyPackages = import nixpkgs {
@@ -96,13 +108,15 @@
 
       packages = {
         inherit (legacyPackages)
-          nixops_1_6_1-preplugin
-          nixops_1_7-preplugin
-          nixops_1_7-preplugin-unstable
-          nixops_1_7-iohk-unstable
-          nixops_1_8-nixos-unstable
+          nixops_2_0-latest-unstable
+          nixops_2_0-2021-02-unstable
+          nixops_2_0-2021-01-unstable
           nixops_2_0-2020-07-unstable
-          nixops_2_0-2021-01-unstable;
+          nixops_1_8-nixos-unstable
+          nixops_1_7-iohk-unstable
+          nixops_1_7-preplugin-unstable
+          nixops_1_7-preplugin
+          nixops_1_6_1-preplugin;
       };
 
       devShell = pkgs.mkShell {
@@ -121,34 +135,70 @@
           inherit self system pkgs patches p;
           validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" ];
         };
-      in {
+
+        mkNixops_2-2021-02 = nixpkgs-src: patches: p: pkgs.callPackage ./pkgs/nixops_2-2021-02-unstable.nix {
+          inherit self system pkgs nixpkgs-src patches p;
+          validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" "wg-links" ];
+        };
+      in rec {
         nixops_1_7-iohk-unstable = p: mkNixops_1 "core-iohk" "1_7" p;
         nixops_1_8-nixos-unstable = p: mkNixops_1 "core-nixos" "1_8" p;
         nixops_2_0-2020-07-unstable = p: mkNixops_2 [ ./patches/nixpkgs-pr83548-2020-07.diff ] p;
         nixops_2_0-2021-01-unstable = p: mkNixops_2 [ ./patches/nixpkgs-pr83548-2021-01.diff ] p;
+        nixops_2_0-2021-02-unstable = p: mkNixops_2-2021-02 self.inputs.nixpkgs-plugin-2-2021-02 [ ./patches/nixpkgs-2021-02.diff ] p;
+        nixops_2_0-latest-unstable = nixops_2_0-2021-02-unstable;
       };
 
       apps = {
         info = flake-utils.lib.mkApp {
           drv = pkgs.writeShellScriptBin "info" ''
-            echo -e "\nNIXOPS VERSIONS INFO\n"
-            echo -e "See the repo README.md file for a detailed description of each attribute and usage examples.\n"
+            echo
+            echo "NIXOPS VERSIONS INFO"
+            echo
+            echo "See the repo README.md file for a detailed description of each attribute and usage examples."
+            echo
             echo "  https://github.com/input-output-hk/nixops-flake"
-            echo -e "\n\nThe following nixops packages are available from this flake:\n"
+            echo
+            echo
+            echo "The following nixops packages are available from this flake:"
+            echo
             echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames packages)}"
-            echo -e "\n\nTo summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:\n"
+            echo
+            echo
+            echo "To summarize, these attributes (as \''${ATTRIBUTE}) can be built via flake, purely, with:"
+            echo
             echo "  nix <build|shell> github:input-output-hk/nixops-flake#\''${ATTRIBUTE}"
-            echo -e "\n\nThe following attributes can be built via flake, impurely, with specified plugins available (at least one of \''${PLUGIN}):\n"
-            echo -e "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames impure)}\n"
+            echo
+            echo
+            echo "This flakes nixops attributes can be built impurely, with specified plugins available (at least one of \''${PLUGIN}):"
+            echo
+            echo "  ${lib.concatMapStringsSep "\n  " (s: s) (builtins.attrNames impure)}"
+            echo
             echo "nix <build|shell> --impure --expr '(builtins.getFlake \"github:input-output-hk/nixops-flake\")'\\"
             echo "'.impure.\''${builtins.currentSystem}.\''${ATTRIBUTE} [ \''${PLUGIN} ]'"
-            echo -e "\n  where \''${PLUGIN} is of (with quotes): \"aws\" \"hetzner\" \"gcp\" \"packet\" \"virtd\" \"vbox\" \"encrypted-links\""
+            echo
+            echo "  where \''${PLUGIN} is of (with quotes):"
+            echo
+            echo "    \"aws\""
+            echo "    \"encrypted-links\""
+            echo "    \"gcp\""
+            echo "    \"hetzner\""
+            echo "    \"packet\""
+            echo "    \"vbox\""
+            echo "    \"virtd\""
+            echo "    \"wg-links\""
+            echo
             echo "  and where \`(toString ./.)\` can be substituted for the remote flake path in the command above if you are in a root local repo dir."
-            echo -e "\n\nA repl of this flake can be run by any of:\n"
-            echo "  nix run github:input-output-hk/nixops-flake#repl-remote      # A repl for the remote flake not yet cloned locally"
+            echo
+            echo
+            echo "A repl of this flake can be run by any of:"
+            echo
+            echo "  nix run github:input-output-hk/nixops-flake#repl-remote         # A repl for the remote flake not yet cloned locally"
             echo "  nix run .#repl                                                  # A repl for a local flake from the root repo dir"
             echo "  nix repl repl.nix                                               # A repl for a local flake from the root repo dir"
-            echo -e "\n\nLegacy packages are also available from this flake from the \`legacyPackages.\''${system}.nixops*\` attributes via overlay."
+            echo
+            echo
+            echo "Legacy packages are also available from this flake from the \`legacyPackages.\''${system}.nixops*\` attributes via overlay."
             echo
           '';
         };

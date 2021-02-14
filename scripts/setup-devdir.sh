@@ -27,11 +27,14 @@ git clone https://github.com/nix-community/nixops-gce
 echo
 git clone https://github.com/NixOS/nixops-hetzner
 echo
-git clone https://github.com/input-output-hk/nixops-packet
-echo
 git clone https://github.com/nix-community/nixops-libvirtd
 echo
+git clone https://github.com/input-output-hk/nixops-packet
+echo
 git clone https://github.com/nix-community/nixops-vbox
+echo
+git clone https://github.com/input-output-hk/nixops-wg-links
+echo
 
 echo
 echo "The following lines can now replace the corresponding pyproject.toml lines for local development:"
@@ -44,6 +47,7 @@ echo "nixops-hetzner = {path = \"${DEVDIR}/nixops-hetzner\"}"
 echo "nixops-packet = {path = \"${DEVDIR}/nixops-packet\"}"
 echo "nixops-virtd = {path = \"${DEVDIR}/nixops-libvirtd\"}"
 echo "nixopsvbox = {path = \"${DEVDIR}/nixops-vbox\"}"
+echo "nixops-wg-links = {path = \"${DEVDIR}/nixops-wg-links\"}"
 echo
 
 echo "The directory \"${DEVDIR}\" is now ready for local development and testing"

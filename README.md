@@ -83,15 +83,16 @@ nix flake update
 ```
 Flake Attribute Name              Binary Ver (*)         Comment
 -----------------------------     ------------------     ---------------------------------------------------------------------
-nixops_2_0-2021-01-unstable       @version@              Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links, contrib
-nixops_2_0-2020-07-unstable       @version@              Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links, contrib
+nixops_2_0-2021-02-unstable       @version@              Plugins: aws, gcp, packet, libvirtd, vbox, wg-links, encrypted-links(1), contrib
+nixops_2_0-2021-01-unstable       @version@              Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links(1), contrib
 nixops_1_8-nixos-unstable         1.8pre0_abcdef         Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_1_7-iohk-unstable          1.7pre0_abcdef         Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_1_7-preplugin-unstable     1.7pre2764_932bf43     Monolithic
 nixops_1_7-preplugin              1.7                    Monolithic
 nixops_1_6_1-preplugin            1.6.1                  Monolithic
 
-(!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
+(!) = There is a build error of the `libvirtd` plugin on Darwin
+(1) = encrypted-links has a known partial deployment bug when using `--include` or `--exclude`
 (*) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 ```
 
@@ -99,7 +100,8 @@ nixops_1_6_1-preplugin            1.6.1                  Monolithic
 ### Building Flake Attributes Purely
 
 * Building purely will automatically add all plugins to the resulting binary.  The exception to this is:
-  * The plugin libvirtd will be excluded on Darwin for `nixops_2_0` attributes due to a build error.
+  * The plugin libvirtd will be excluded on Darwin for `nixops_2_0-2021-01` and older nixops_2_0 attributes due to a libvirt build error.
+  * The encrypted-links plugin will be excluded from the pure build as it causes an exception on partial nixops deployments
 * Nixops versions can be built from the attribute names above, with:
 ```
 # For attributes from a remote repo not yet cloned:
@@ -117,12 +119,13 @@ nix <build|shell> .#${ATTRIBUTE}
 ```
 Flake Attribute Name             Binary Ver (*)        Comment
 -------------------------        --------------        -----------------------------------------------------------------------
-nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links
-nixops_2_0-2020-07-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, contrib, encrypted-links
+nixops_2_0-2021-02-unstable      @version@             Plugins: aws, gcp, packet, libvirtd, vbox, wg-links, encrypted-links(1), contrib
+nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links(1), contrib
 nixops_1_8-nixos-unstable        1.8pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_1_7-iohk-unstable         1.7pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
 
-(!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
+(!) = There is a build error of the `libvirtd` plugin on Darwin
+(1) = encrypted-links has a known partial deployment bug when using `--include` or `--exclude`
 (*) = To do: Fix up the builds to show proper version and commit rev from `nixops --version`
 ```
 
@@ -138,10 +141,11 @@ nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))'\
 '.impure.${builtins.currentSystem}.${ATTRIBUTE} [ ${PLUGIN} ]'
 
 # Where ${PLUGIN} is generally of the following plugin strings (with quotes), depending on attribute selected:
-# "aws" "encrypted-links" "gcp" "hetzner" "packet" "virtd" "vbox"
+# "aws" "encrypted-links" "gcp" "hetzner" "packet" "virtd" "vbox" "wg-links"
 ```
 
 * Nixops can be built impurely with no plugins.  In this case, a warning will be shown during the build.
+* The `contrib` plugin is a plugin depedency of some plugins such as the `aws` plugin.
 
 
 ## Flake Outputs and Legacy Packages
@@ -153,14 +157,15 @@ nix <build|shell> --impure --expr '(builtins.getFlake (toString ./.))'\
 nix-build default.nix -A legacyPackages.${SYSTEM}.${ATTRIBUTE}
 ```
 * Similarly, non-flake nix can also utilize these legacy package attributes in other non-flake nix code.
-* An example of non-flake nix using direnv with this nixops-flake repo is seen [here](examples/legacy-usage/shell.nix)
+* An example of non-flake nix using direnv with this nixops-flake repo is seen [here](examples/legacy-usage/shell.nix).
 
 
 ## Default Package Version
 
-* Due to a Darwin build error in the libvirtd plugin, the default packages by system are slightly different:
-  * `x86_64-linux`:  `nixops_2_0-2021-01-unstable`, all plugins
-  * `x86_64-darwin`: `nixops_2_0-2021-01-unstable`, all plugins except libvirtd
+* The default package version is the attribute `nixops_2_0-latest-unstable`
+  * This currently points to attribute `nixops_2_0-2021-02-unstable`
+* Due to a deployment error with the `encrypted-links` plugin when `--include` or `--exclude` is used, it is excluded from the pure build until fixed.
+  * In the meantime, it can be included in impure builds if needed.
 * To build or enter a shell with the default nixops package, run:
 ```
 # For the default nixops package from a remote repo not yet cloned:
@@ -176,12 +181,13 @@ nix shell .#
 
 * Nixops: `nixops` [https://github.com/NixOS/nixops](https://github.com/NixOS/nixops)
 * Plugin: `aws` [https://github.com/NixOS/nixops-aws](https://github.com/NixOS/nixops-aws)
-* Plugin: `gcp` [https://github.com/nix-community/nixops-gce](https://github.com/nix-community/nixops-gce)
-* Plugin: `packet` [https://github.com/input-output-hk/nixops-packet](https://github.com/input-output-hk/nixops-packet)
-* Plugin: `libvirtd` [https://github.com/nix-community/nixops-libvirtd](https://github.com/nix-community/nixops-libvirtd)
-* Plugin: `vbox` [https://github.com/nix-community/nixops-vbox](https://github.com/nix-community/nixops-vbox)
-* Plugin: `links` [https://github.com/nix-community/nixops-encrypted-links](https://github.com/nix-community/nixops-encrypted-links)
 * Plugin: `contrib` [https://github.com/nix-community/nixos-modules-contrib](https://github.com/nix-community/nixos-modules-contrib)
+* Plugin: `encrypted-links` [https://github.com/nix-community/nixops-encrypted-links](https://github.com/nix-community/nixops-encrypted-links)
+* Plugin: `gcp` [https://github.com/nix-community/nixops-gce](https://github.com/nix-community/nixops-gce)
+* Plugin: `libvirtd` [https://github.com/nix-community/nixops-libvirtd](https://github.com/nix-community/nixops-libvirtd)
+* Plugin: `packet` [https://github.com/input-output-hk/nixops-packet](https://github.com/input-output-hk/nixops-packet)
+* Plugin: `vbox` [https://github.com/nix-community/nixops-vbox](https://github.com/nix-community/nixops-vbox)
+* Plugin: `wg-links` [https://github.com/input-output-hk/nixops-wg-links](https://github.com/input-output-hk/nixops-wg-links)
 
 
 ## Generating an Updated Poetry Nixops2 Patch File
@@ -194,22 +200,23 @@ nix shell .#
 
 * From the git tracked repo directory at `../nixpkgs-patch`, make the following modifications as needed:
 ```
-* Run the update script for poetry at: pkgs/development/tools/poetry2nix/update
-* Add a packet-python poetry override to: pkgs/development/tools/poetry2nix/poetry2nix/overrides.nix
+* Run the update script for poetry at: `pkgs/development/tools/poetry2nix/update`
+* If using `nixops-packet` plugin, add a packet-python poetry override to: `pkgs/development/tools/poetry2nix/poetry2nix/overrides.nix`
 
-    packet-python = super.packet-python.overridePythonAttrs (
-      old: {
-        buildInputs = old.buildInputs ++ [ self.pytest-runner ];
-      }
-    );
+  packet-python = super.packet-python.overridePythonAttrs (old: {
+    buildInputs = (old.propagatedBuildInputs or [ ]) ++ [ self.pytest-runner ];
+    postPatch = ''
+      substituteInPlace setup.py --replace 'setup_requires=["pytest-runner"],' ""
+    '';
+  });
 
-* If needed, adjust the pyproject.toml file for the new nixops version at: `pkgs/tools/package-management/nixops2/pyproject.toml`.
-* If needed, adjust the default.nix file for the new nixops version at: `pkgs/tools/package-management/nixops2/default.nix`.
-* Run the update script for nixops2 at: `pkgs/tools/package-management/nixops2/update`.
+* If needed, adjust the `pyproject.toml` file for the new nixops version at: `pkgs/applications/networking/cluster/nixops/pyproject.toml`.
+* If needed, adjust the `default.nix` file for the new nixops version at: `pkgs/applications/networking/cluster/nixops/default.nix`.
+* Run the update script for nixops2 at: `pkgs/applications/networking/cluster/nixops/update`.
 * Add all diffs from the command above: `git add ${CHANGED_FILES[@]}`.
 * Generate a patch file: `git diff --cached > new_patch.diff`.
 * Copy new patch file to the `patches/` directory in this repo.
-* Use the new patch with nixops2 package generator in this repo: `pkgs/nixops_2-unstable.nix`.
+* Use the new patch with nixops2 package generator in this repo: `pkgs/nixops_2-unstable*.nix`.
 ```
 
 
@@ -241,6 +248,7 @@ nixops-hetzner = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-hetzner
 nixops-packet = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-packet"}
 nixops-virtd = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-libvirtd"}
 nixopsvbox = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-vbox"}
+nixops-wg-links = {path = "/home/myUser/nixops-flake-wt/nixops-dev/nixops-wg-links"}
 
 The directory "/home/myUser/nixops-flake-wt/nixops-dev" is now ready for local development and testing
 ```
@@ -248,13 +256,13 @@ The directory "/home/myUser/nixops-flake-wt/nixops-dev" is now ready for local d
 * Use your similar `pyproject.toml` lines from the `setup-devdir.sh` script output to update the `pyproject.toml` file:
 ```
 # Where desired, update the pyproject.toml file with local pointing repo references in the nixpkgs-patch directory
-vim ../nixpkgs-patch/pkgs/tools/package-management/nixops2/pyproject.toml
+vim ../nixpkgs-patch/pkgs/applications/networking/cluster/nixops/pyproject.toml
 ```
 
 * Update poetry to use the new paths and enter a shell with the updated version of nixops by running the following:
 ```
 # If not already there, cd to the poetry2 directory in the nixpkgs-patch directory
-cd ../nixpkgs-patch/pkgs/tools/package-management/nixops2/pyproject.toml
+cd ../nixpkgs-patch/pkgs/applications/networking/cluster/nixops/pyproject.toml
 
 # Enter a nix shell to get poetry
 nix-shell
@@ -289,6 +297,16 @@ poetry shell
 * A `nix flake show` command will break due to an issue with IFD and flakes.
 * This appears to be cosmetic and will be fixed when there is a suitable workaround.  [IssueRef](https://discourse.nixos.org/t/how-to-use-flakes-with-ifd/10300)
 * Testing was done at nix version `nix (Nix) 2.4pre20201205_a5d85d0`.
+* When updating to new nixpkgs source inputs and/or patch files for new nixops attribute generation:
+  * Ensure the `nixpkgs-plugin-2-latest` flake input is pointing to the most recent nixpkgs src version used by the patches.
+  * Ensure the `patches/nixpkgs-latest.diff` file is symlinked to the most recent diff file used by the patches.
+  * Ensure the `latest` versions of the attributes for pure and impure builds are defined for the most recent nixops2 attributes.
+* When entering a `nix-shell` from the `../nixpkgs-patch/pkgs/applications/networking/cluster/nixops` directory, note that:
+  * The provided `shell.nix` is using imperative import of `<nixpkgs> {}` and this may result in a different poetry version than the `update` script uses.
+  * Enter a nix-shell instead with the following for version matching
+```
+nix-shell -p poetry poetry2nix.cli -I nixpkgs=../../../../../.
+```
 
 
 ## To Do

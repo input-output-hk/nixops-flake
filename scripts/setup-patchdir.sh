@@ -2,7 +2,8 @@
 
 set -euo pipefail
 
-NIXPKGS_PIN="nixpkgs-plugin-2"
+NIXPKGS_PIN="nixpkgs-plugin-2-latest"
+PATCH_PIN="nixpkgs-latest.diff"
 NIXPKGS_VER="20.09"
 PATCHDIR_RELATIVE="../../nixpkgs-patch"
 
@@ -11,7 +12,7 @@ echo "Setting up a new nixpkgs patch directory for generating a new nixops bundl
 echo
 
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-BASEPATCH_RELATIVE="$(find "${SCRIPTDIR}"/../patches/nixpkgs-pr83548-20* | sort -n -r | head -n 1)"
+BASEPATCH_RELATIVE="${SCRIPTDIR}/../patches/${PATCH_PIN}"
 BASEPATCH="$(realpath "$BASEPATCH_RELATIVE")"
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 PATCHDIR=$(realpath "${SCRIPTDIR}/${PATCHDIR_RELATIVE}")
