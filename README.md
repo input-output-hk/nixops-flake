@@ -83,7 +83,7 @@ nix flake update
 ```
 Flake Attribute Name              Binary Ver (*)         Comment
 -----------------------------     ------------------     ---------------------------------------------------------------------
-nixops_2_0-2021-02-unstable       @version@              Plugins: aws, gcp, packet, libvirtd, vbox, wg-links, encrypted-links(1), contrib
+nixops_2_0-2021-02-unstable       @version@              Plugins: aws, gcp, packet, libvirtd, vbox, wg-links, encrypted-links, contrib
 nixops_2_0-2021-01-unstable       @version@              Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links(1), contrib
 nixops_1_8-nixos-unstable         1.8pre0_abcdef         Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_1_7-iohk-unstable          1.7pre0_abcdef         Plugins: aws, hetzner, packet, libvirtd, vbox
@@ -101,7 +101,6 @@ nixops_1_6_1-preplugin            1.6.1                  Monolithic
 
 * Building purely will automatically add all plugins to the resulting binary.  The exception to this is:
   * The plugin libvirtd will be excluded on Darwin for `nixops_2_0-2021-01` and older `nixops_2_0` attributes due to a libvirt build error.
-  * The encrypted-links plugin will be excluded from the pure build as it causes an exception on partial nixops deployments
 * Nixops versions can be built from the attribute names above, with:
 ```
 # For attributes from a remote repo not yet cloned:
@@ -119,7 +118,7 @@ nix <build|shell> .#${ATTRIBUTE}
 ```
 Flake Attribute Name             Binary Ver (*)        Comment
 -------------------------        --------------        -----------------------------------------------------------------------
-nixops_2_0-2021-02-unstable      @version@             Plugins: aws, gcp, packet, libvirtd, vbox, wg-links, encrypted-links(1), contrib
+nixops_2_0-2021-02-unstable      @version@             Plugins: aws, gcp, packet, libvirtd, vbox, wg-links, encrypted-links, contrib
 nixops_2_0-2021-01-unstable      @version@             Plugins: aws, gcp, packet, libvirtd(!), vbox, encrypted-links(1), contrib
 nixops_1_8-nixos-unstable        1.8pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
 nixops_1_7-iohk-unstable         1.7pre0_abcdef        Plugins: aws, hetzner, packet, libvirtd, vbox
@@ -164,8 +163,6 @@ nix-build default.nix -A legacyPackages.${SYSTEM}.${ATTRIBUTE}
 
 * The default package version is the attribute `nixops_2_0-latest-unstable`
   * This currently points to attribute `nixops_2_0-2021-02-unstable`
-* Due to a deployment error with the `encrypted-links` plugin when `--include` or `--exclude` is used, it is excluded from the pure build until fixed.
-  * In the meantime, it can be included in impure builds if needed.
 * To build or enter a shell with the default nixops package, run:
 ```
 # For the default nixops package from a remote repo not yet cloned:

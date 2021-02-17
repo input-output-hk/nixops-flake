@@ -22,28 +22,26 @@
 
 ### nixops_2_0-2021-02-unstable (@version@)
 
-* Pure builds are compiled with all mentioned plugins except for `encrypted-links`.
+* Pure builds are compiled with all mentioned plugins.
 * Impure builds may be used to selectively choose plugins.
 * Plugins available are aws, gcp, packet, libvirtd, vbox, nixos-modules-contrib ("contrib below"), encrypted-links ("links" below) and wg-links:
 * Attribute Notes:
   * wg-links is a new plugin available which supports easy setup of wireguard mesh or star topologies to deployments.
     * It hasn't been throughly test yet and should be considered alpha quality.
   * The libvirtd plugin now builds again on Darwin and has been re-added to the pure build.
-  * The encrypted-links plugin throws an error when deploying with `--include` or `--exclude` and so is not included in the pure build until fixed.
 ```
 Component      Tag         Commit Date     Commit Revision                             Repo
 -----------    --------    -----------     ----------------------------------------    ------------------------------------------------
 nixops         > 1.7       2021-02-11      23db83fc91952d2dbcc64b8aa1ac16f8c8f45bed    github:NixOS/nixops
 aws            > v1.0.0    2021-02-01      dbbaa1b15b6cf7ca1ceeb0a6195f5ee27693c505    github:NixOS/nixops-aws
 gcp                        2021-02-10      fed6aadace9a9e914425589c065bb969d53f2309    github:nix-community/nixops-gce
-packet         > v0.0.4    2021-02-14      da0421fc93240f822f9668bfb86096e4da19022b    github:input-output-hk/nixops-packet
+packet         > v0.0.4    2021-02-14      a84a42d41f542c3f2bc8ea05836daf48044d60a0    github:input-output-hk/nixops-packet
 libvirtd       > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-17      2729672865ebe2aa973c062a3fbddda8c1359da0    github:nix-community/nixops-vbox
-links(!)                   2021-01-18      0bb9aa50a7294ee9dca10a18ff7d9024234913e1    github:nix-community/nixops-encrypted-links
-wg-links                   2021-02-12      153f34ac8cba21b08641b4fd41f1595576be683e    github:input-output-hk/nixops-wg-links
+links                      2021-02-16      e2f196fce15fcfb00d18c055e1ac53aec33b8fb1    github:nix-community/nixops-encrypted-links
+wg-links                   2021-02-16      972b993b6a887cad85ad51d3e9e2f6df9f6d3724    github:input-output-hk/nixops-wg-links
 contrib(*)                 2021-01-20      81a1c2ef424dcf596a97b2e46a58ca73a1dd1ff8    github:nix-community/nixos-modules-contrib
 
-(!) = encrypted-links has a known partial deployment bug when using `--include` or `--exclude`
 (*) = The nixos-modules-contrib plugin is a plugin dependency of some other plugins like `aws`
 ```
 
@@ -64,10 +62,11 @@ gcp                        2020-12-26      4ac78a5a7f30170e58d4f376e46ab84736fbc
 packet         > v0.0.4    2021-01-17      9e800f5cf9b0b387f4b96683f2dac16e7b56abb6    github:input-output-hk/nixops-packet
 libvirtd(!)    > v1.0.0    2020-07-13      af6cf5b2ced57b7b6d36b5df7dd27a14e0a5cfb6    github:nix-community/nixops-libvirtd
 vbox           > v1.0.0    2020-07-17      2729672865ebe2aa973c062a3fbddda8c1359da0    github:nix-community/nixops-vbox
-links                      2021-01-18      0bb9aa50a7294ee9dca10a18ff7d9024234913e1    github:nix-community/nixops-encrypted-links
+links(1)                   2021-01-18      0bb9aa50a7294ee9dca10a18ff7d9024234913e1    github:nix-community/nixops-encrypted-links
 contrib(*)                 2020-07-10      6e4d21f47f0c40023a56a9861886bde146476198    github:nix-community/nixos-modules-contrib
 
 (!) = There is a build error of the `libvirtd` plugin on Darwin at the moment
+(1) = encrypted-links has a known partial deployment bug when using `--include` or `--exclude`
 (*) = The nixos-modules-contrib plugin is a plugin dependency of some other plugins like `aws`
 ```
 

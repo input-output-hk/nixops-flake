@@ -2,9 +2,7 @@
 let
   mkNixops_2-2021-02 = nixpkgs-src: patches: pkgs.callPackage ./pkgs/nixops_2-2021-02-unstable.nix {
     inherit self system pkgs nixpkgs-src patches;
-    # Remove encrypted-links plugin until partial deployment errors are fixed
-    # validPlugins = [ "aws" "encrypted-links" "wg-links" "gcp" "packet" "virtd" "vbox" ];
-    validPlugins = [ "aws" "gcp" "packet" "virtd" "vbox" "wg-links" ];
+    validPlugins = [ "aws" "encrypted-links" "wg-links" "gcp" "packet" "virtd" "vbox" ];
   };
 
   mkNixops_2 = patches: pkgs.callPackage ./pkgs/nixops_2-unstable.nix {
