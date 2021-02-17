@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "input-output-hk",
         "repo": "nixops-flake",
-        "rev": "d483c9ec981e23d2650255149356b58cc19268be",
-        "sha256": "1r9xdczal2rw1cgfgkhp8h0gcdj1vh4n7aza62chan041gmgdvwg",
+        "rev": "373504a10e41998de5370da4162a15eb9faf2d97",
+        "sha256": "0fg74n21gbmys8w2gz548yybfxbiz2kicdsh7h2mxx6wbsi25vc8",
         "type": "tarball",
-        "url": "https://github.com/input-output-hk/nixops-flake/archive/d483c9ec981e23d2650255149356b58cc19268be.tar.gz",
+        "url": "https://github.com/input-output-hk/nixops-flake/archive/373504a10e41998de5370da4162a15eb9faf2d97.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
