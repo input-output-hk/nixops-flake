@@ -40,6 +40,7 @@ in nixops_2-nixpkgs.nixops2Unstable.withPlugins (ps: with ps; let
     packet = nixops-packet;
     virtd = nixops-virtd;
     vbox = nixopsvbox;
+    vultr = nixops-vultr
   };
   filteredPlugins = attrValues (filterAttrs (n: v: builtins.elem n p') allPlugins);
 in
