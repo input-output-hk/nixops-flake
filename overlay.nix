@@ -15,7 +15,7 @@ let
 
   mkNixops_1 = nixopsCore: coreVersion: pkgs.callPackage ./pkgs/nixops_1-unstable.nix {
     inherit self system pkgs nixopsCore coreVersion;
-    validPlugins = [ "aws" "hetzner" "packet" "virtd" "vbox" ];
+    validPlugins = [ "aws" "hetzner" "vultr" "packet" "virtd" "vbox" ];
   };
 in final: prev: {
   nixops_2_0-latest-unstable = mkNixops_2-2021-02 self.inputs.nixpkgs-plugin-2-2021-02 [ ./patches/nixpkgs-2021-02.diff ];
