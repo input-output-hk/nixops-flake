@@ -133,6 +133,22 @@
         "type": "github"
       }
     },
+    "nixops_1_7-plugin-vultr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1560438935,
+        "narHash": "sha256-Y96Qis3O+1JQJ4ZOxiws5jDsIHrdHzEt0tRwEi8Ii5I=",
+        "owner": "disassembler",
+        "repo": "nixops-vultr",
+        "rev": "1d5011fc71d9a6996854a98058a6b00378072c71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "disassembler",
+        "repo": "nixops-vultr",
+        "type": "github"
+      }
+    },
     "nixops_1_8-plugin-core-nixos": {
       "flake": false,
       "locked": {
@@ -258,6 +274,7 @@
         "nixops_1_7-plugin-libvirtd": "nixops_1_7-plugin-libvirtd",
         "nixops_1_7-plugin-packet": "nixops_1_7-plugin-packet",
         "nixops_1_7-plugin-vbox": "nixops_1_7-plugin-vbox",
+        "nixops_1_7-plugin-vultr": "nixops_1_7-plugin-vultr",
         "nixops_1_8-plugin-core-nixos": "nixops_1_8-plugin-core-nixos",
         "nixpkgs": "nixpkgs",
         "nixpkgs-pin": "nixpkgs-pin",

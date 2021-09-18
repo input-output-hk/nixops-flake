@@ -44,6 +44,12 @@
       flake = false;
     };
 
+    nixops_1_7-plugin-vultr = {
+      # Commit pin from branch: master, v1.0.1 tag
+      url = "github:disassembler/nixops-vultr";
+      flake = false;
+    };
+
     nixops_1_7-plugin-hetzner = {
       # Commit pin from branch: master, v1.0.1 tag
       url = "github:NixOS/nixops-hetzner?rev=6245ca44f3682e45d6d82cee7d873f76b51ff693";
@@ -128,7 +134,7 @@
       impure = let
         mkNixops_1 = nixopsCore: coreVersion: p: pkgs.callPackage ./pkgs/nixops_1-unstable.nix {
           inherit self system pkgs nixopsCore coreVersion p;
-          validPlugins = [ "aws" "hetzner" "packet" "virtd" "vbox" ];
+          validPlugins = [ "aws" "hetzner" "packet" "virtd" "vbox" "vultr" ];
         };
 
         mkNixops_2 = patches: p: pkgs.callPackage ./pkgs/nixops_2-unstable.nix {
@@ -183,6 +189,7 @@
             echo "    \"encrypted-links\""
             echo "    \"gcp\""
             echo "    \"hetzner\""
+            echo "    \"vultr\""
             echo "    \"packet\""
             echo "    \"vbox\""
             echo "    \"virtd\""
