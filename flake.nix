@@ -134,17 +134,17 @@
       impure = let
         mkNixops_1 = nixopsCore: coreVersion: p: pkgs.callPackage ./pkgs/nixops_1-unstable.nix {
           inherit self system pkgs nixopsCore coreVersion p;
-          validPlugins = [ "aws" "hetzner" "packet" "virtd" "vbox" "vultr" ];
+          validPlugins = [ "aws" "hetzner" "packet" "virtd" "vbox" ];
         };
 
         mkNixops_2 = patches: p: pkgs.callPackage ./pkgs/nixops_2-unstable.nix {
           inherit self system pkgs patches p;
-          validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" ];
+          validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" "vultr" ];
         };
 
         mkNixops_2-2021-02 = nixpkgs-src: patches: p: pkgs.callPackage ./pkgs/nixops_2-2021-02-unstable.nix {
           inherit self system pkgs nixpkgs-src patches p;
-          validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" "wg-links" ];
+          validPlugins = [ "aws" "encrypted-links" "gcp" "virtd" "packet" "vbox" "wg-links" "vultr" ];
         };
       in rec {
         nixops_1_7-iohk-unstable = p: mkNixops_1 "core-iohk" "1_7" p;
