@@ -2,13 +2,13 @@
 let
   mkNixops_2-2021-02 = nixpkgs-src: patches: pkgs.callPackage ./pkgs/nixops_2-2021-02-unstable.nix {
     inherit self system pkgs nixpkgs-src patches;
-    validPlugins = [ "aws" "encrypted-links" "wg-links" "gcp" "packet" "virtd" "vbox" ];
+    validPlugins = [ "aws" "encrypted-links" "wg-links" "gcp" "packet" "virtd" "vbox" "vultr" ];
   };
 
   mkNixops_2 = patches: pkgs.callPackage ./pkgs/nixops_2-unstable.nix {
     inherit self system pkgs patches;
     validPlugins = if pkgs.stdenv.isLinux then
-      [ "aws" "encrypted-links" "gcp" "packet" "virtd" "vbox" ]
+      [ "aws" "encrypted-links" "gcp" "packet" "virtd" "vbox" "vultr" ]
     else
       [ "aws" "encrypted-links" "gcp" "packet" "vbox" ];
   };
